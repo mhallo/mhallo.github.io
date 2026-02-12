@@ -161,6 +161,17 @@
     
     .resume-block.arrived { opacity: 1; transform: translateY(0); }
 
+    #resume-view.fade-transition {
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    #resume-view.fading-out {
+      opacity: 0;
+      transform: translateY(10px);
+      pointer-events: none;
+    }
   </style>
 </head>
 <body>
@@ -340,28 +351,39 @@
       setTimeout(() => {
         home.classList.add('hidden');
         home.classList.remove('fading-out');
-        
+
         resume.classList.remove('hidden');
+        resume.classList.add('fade-transition');
         window.scrollTo(0, 0);
 
         resumeBlocks.forEach((block, index) => {
+          block.classList.remove('arrived');
           setTimeout(() => {
             block.classList.add('arrived');
-          }, index * 100); 
+          }, index * 100);
         });
 
-      }, 300); 
+      }, 300);
 
     } else {
-      resume.classList.add('hidden');
+      // fade resume OUT
+      resume.classList.add('fading-out');
+
       resumeBlocks.forEach(block => {
         block.classList.remove('arrived');
       });
 
-      home.classList.remove('hidden');
-      requestAnimationFrame(() => {
-        home.classList.remove('fading-out');
-      });
+      setTimeout(() => {
+        resume.classList.add('hidden');
+        resume.classList.remove('fading-out');
+
+        home.classList.remove('hidden');
+        home.classList.add('fade-transition');
+
+        requestAnimationFrame(() => {
+          home.classList.remove('fading-out');
+        });
+      }, 300);
     }
   }
 </script>
