@@ -4,10 +4,30 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Matt Hallowell – Senior Software Engineer</title>
-
+  
   <meta name="description" content="Senior Software Engineer specializing in distributed systems and applied AI." />
   <meta name="color-scheme" content="light dark" />
   <meta name="theme-color" content="#0b0e14" />
+  <link rel="canonical" href="https://gt3.dev" />
+
+  <!-- Structured Data for SEO -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Matt Hallowell",
+    "url": "https://gt3.dev",
+    "jobTitle": "Senior Software Engineer",
+    "alumniOf": "DePaul University",
+    "sameAs": [ "https://linkedin.com/in/mhallo", "https://github.com/mhallo" ],
+    "knowsAbout": [
+      "Distributed Systems Architecture", "Cloud Infrastructure (AWS, Kubernetes, EKS)",
+      "Infrastructure as Code (Terraform)", "Data Engineering (Polars, Dagster, ETL)",
+      "Applied AI (RAG, LLM Agents, Model Context Protocol)", "Backend Development (Python, Go, C++, Java, Node.js)",
+      "Real-time Systems (DSP)", "DevSecOps (FedRAMP, IL4)"
+    ]
+  }
+  </script>
 
   <!-- Open Graph -->
   <meta property="og:title" content="Matt Hallowell – Senior Software Engineer" />
@@ -23,16 +43,15 @@
       --accent: #7aa2f7;
       --link-muted: #9aa0a6;
       --divider: rgba(255,255,255,0.08);
+      --btn-bg: rgba(255,255,255,0.06);
     }
 
     @media (prefers-color-scheme: light) {
       :root {
-        --bg: #f7f7fb;
-        --fg: #1a1a1a;
-        --muted: #555;
-        --accent: #3b6cff;
-        --link-muted: #555;
+        --bg: #f7f7fb; --fg: #1a1a1a; --muted: #555;
+        --accent: #3b6cff; --link-muted: #555;
         --divider: rgba(0,0,0,0.08);
+        --btn-bg: rgba(0,0,0,0.05);
       }
     }
 
@@ -45,105 +64,111 @@
       place-items: center;
       min-height: 100vh;
       line-height: 1.55;
+      overflow-x: hidden;
     }
 
-    main {
+    #container {
       max-width: 680px;
       padding: 2rem;
-      animation: fadeUp 0.8s ease-out;
+      width: 100%;
+      box-sizing: border-box;
+      min-height: 100vh; 
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
     }
 
+    /* TYPOGRAPHY */
     h1 {
-      margin-bottom: 0.4rem;
-      font-size: 2.6rem;
-      letter-spacing: -0.02em;
-      font-weight: 600;
-      display: inline-flex;
+      margin-bottom: 0.4rem; font-size: 2.6rem; letter-spacing: -0.02em;
+      font-weight: 600; display: inline-flex; align-items: baseline;
+    }
+    
+    h2 { 
+      font-size: 1.4rem; margin-top: 2rem; margin-bottom: 1rem;
+      border-bottom: 1px solid var(--divider); padding-bottom: 0.5rem; color: var(--fg); 
+    }
+    
+    h3 { 
+      font-size: 1.15rem; margin-bottom: 0.2rem; margin-top: 1.8rem; 
+      color: var(--accent); display: flex; justify-content: space-between; align-items: baseline;
+    }
+
+    p, li { color: var(--muted); font-size: 1.05rem; margin-top: 0.6rem; text-wrap: pretty; }
+    ul { padding-left: 1.1rem; margin-top: 0.6rem; }
+    li { margin-bottom: 0.4rem; font-size: 0.95rem; }
+
+    /* Layout for Title/Date Rows */
+    .role-row {
+      display: flex;
+      justify-content: space-between;
       align-items: baseline;
-    }
-
-    .cursor {
-      display: inline-block;
-      width: 0.55ch;
-      height: 1em;
-      background: currentColor;
-      margin-left: 0.15ch;
-      animation: blink 1.1s steps(1) infinite;
-      vertical-align: baseline;
-      border-radius: 1px;
-    }
-
-    p {
+      font-size: 0.9rem;
       color: var(--muted);
-      font-size: 1.1rem;
-      margin-top: 0.6rem;
-      text-wrap: pretty;
+      margin-bottom: 0.2rem;
     }
+    .role-title { font-weight: 500; color: var(--fg); opacity: 0.9; }
+    .role-date { opacity: 0.8; font-variant-numeric: tabular-nums; }
+    .location { font-weight: normal; font-size: 0.9rem; opacity: 0.7; color: var(--muted); }
 
-    .current {
-      margin-top: 1rem;
-      max-width: 60ch;
+    .current { margin-top: 1rem; max-width: 60ch; }
+    .divider { margin: 1.4rem 0; border: none; height: 1px; background: var(--divider); width: 60%; }
+
+    /* LINKS & BUTTONS */
+    a { color: var(--accent); text-decoration: none; cursor: pointer; transition: opacity 0.2s ease; }
+    a:hover { opacity: 0.7; }
+
+    .previous { margin-top: 0.6rem; font-size: 1rem; }
+    .previous a { color: var(--link-muted); text-decoration: underline; text-decoration-style: dotted; text-underline-offset: 3px; }
+    .previous a:hover { text-decoration-style: solid; }
+
+    nav { margin-top: 1.8rem; }
+    nav a { margin-right: 1rem; color: var(--accent); text-decoration: none; }
+
+    .btn-group { display: flex; gap: 0.8rem; margin-top: 0.5rem; }
+    .btn {
+      display: inline-block; padding: 0.4rem 0.8rem; border: 1px solid var(--divider);
+      border-radius: 6px; font-size: 0.85rem; background: var(--btn-bg); color: var(--fg);
     }
+    .btn:hover { border-color: var(--accent); color: var(--accent); }
 
-    .divider {
-      margin: 1.4rem 0;
-      border: none;
-      height: 1px;
-      background: var(--divider);
-      width: 60%;
-    }
-
-    .previous {
-      margin-top: 0.6rem;
-      font-size: 1rem;
-    }
-
-    .previous a {
-      color: var(--link-muted);
-      text-decoration: underline;
-      text-decoration-style: dotted;
-      text-underline-offset: 3px;
-      transition: text-decoration-style 0.2s ease;
-    }
-
-    .previous a:hover {
-      text-decoration-style: solid;
-    }
-
-    nav {
-      margin-top: 1.8rem;
-    }
-
-    nav a {
-      margin-right: 1rem;
-      color: var(--accent);
-      text-decoration: none;
-      transition: opacity 0.2s ease;
-    }
-
-    nav a:hover {
-      opacity: 0.7;
+    /* ANIMATIONS */
+    .cursor {
+      display: inline-block; width: 0.55ch; height: 1em; background: currentColor;
+      margin-left: 0.15ch; animation: blink 1.1s steps(1) infinite; vertical-align: baseline; border-radius: 1px;
     }
 
     @keyframes fadeUp {
-      from {
-        opacity: 0;
-        transform: translateY(12px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
     }
+    @keyframes blink { 0%, 50% { opacity: 1; } 50.01%, 100% { opacity: 0; } }
 
-    @keyframes blink {
-      0%, 50% { opacity: 1; }
-      50.01%, 100% { opacity: 0; }
+    /* VIEW SWITCHING UTILS */
+    .hidden { display: none !important; }
+    
+    .fade-transition {
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      opacity: 1; transform: translateY(0);
     }
+    .fading-out { opacity: 0; transform: translateY(-10px); pointer-events: none; }
+
+    .resume-block {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.25, 1, 0.3, 1);
+    }
+    
+    .resume-block.arrived { opacity: 1; transform: translateY(0); }
+
   </style>
 </head>
 <body>
-  <main>
+
+<div id="container">
+
+  <!-- ================= MAIN HOME PAGE ================= -->
+  <main id="home-view" class="fade-transition">
     <h1>
       Matt Hallowell<span class="cursor" aria-hidden="true"></span>
     </h1>
@@ -157,7 +182,8 @@
     <p class="current">
       Most recently, I re-architected a legacy monolith into a distributed 
       Polars & Dagster pipeline — processing <strong>40M+</strong> daily records 
-      and reducing ETL runtime by <span style="white-space: nowrap"><strong>97% (5.5h → 16m)</strong>.</span>
+      and reducing ETL runtime by 
+      <strong>97% <span style="white-space: nowrap;">(5.5h → 16m)</span></strong>.
     </p>
 
     <p class="current">
@@ -172,7 +198,7 @@
     </p>
 
     <p class="previous">
-      Before that, I developed low-latency  voice processing 
+      Before that, I developed low-latency voice processing 
       systems and DSP encryption in C++ at <a href="https://www.motorolasolutions.com" target="_blank" rel="noopener">Motorola</a> for mission-critical 
       911 dispatch communications.
     </p>
@@ -184,19 +210,161 @@
     <nav>
       <a href="https://github.com/mhallo" target="_blank" rel="noopener">GitHub</a>
       <a href="https://linkedin.com/in/mhallo" target="_blank" rel="noopener">LinkedIn</a>
+      <a onclick="switchView('resume')">Resume</a>
     </nav>
   </main>
 
-  <script>
-    const startDate = new Date(2017, 6, 1); 
 
-    const now = new Date();
+  <!-- ================= RESUME VIEW ================= -->
+  <div id="resume-view" class="hidden">
     
-    const diff = now - startDate;
-    
-    const years = diff / (1000 * 60 * 60 * 24 * 365.25);
+    <!-- Block 1: Header -->
+    <div class="resume-block" style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap;">
+      <div>
+        <h1 style="font-size: 2.2rem; margin-bottom: 0;">Matt Hallowell</h1>
+        <p style="margin-top: 0.2rem;">Senior Software Engineer</p>
+      </div>
+      <div class="btn-group">
+        <a href="mailto:hello@gt3.dev" class="btn">Contact</a>
+        <a onclick="switchView('home')" class="btn" style="border-color: transparent;">✕ Close</a>
+      </div>
+    </div>
 
-    document.getElementById('exp').innerText = Math.floor(years); 
-  </script>
+    <!-- Block 2: Slickdeals -->
+    <div class="resume-block">
+      <h3>Slickdeals LLC <span class="location">San Mateo, CA</span></h3>
+      <div class="role-row">
+        <span class="role-title">Senior Software Engineer</span>
+        <span class="role-date">August 2024 - Present</span>
+      </div>
+      <ul>
+        <li>Designed and led migration from PHP monolith to distributed Python/Dagster platform, executing zero-downtime cutover via traffic-mirroring shadow tests on EKS to validate 40M+ daily records.</li>
+        <li>Redesigned ETL logic using Polars and distributed EKS fan-out jobs, replacing brittle heuristics to cut runtime by 97% (5.5h → 16m) and reducing infrastructure costs by 40%.</li>
+        <li>Architected a Model Context Protocol (MCP) server to standardize real-time context retrieval for internal LLM agents, enabling RAG workflows that increased recommendation outclicks by 24%.</li>
+        <li>Modernized DevEx by implementing a uv-based Python monorepo and automated ArgoCD pipelines, optimizing GitHub Actions for faster smoke testing and deployment velocity (10m → 2m).</li>
+      </ul>
+    </div>
+
+    <!-- Block 3: Zoom -->
+    <div class="resume-block">
+      <h3>Zoom Video Communications <span class="location">Seattle, WA</span></h3>
+      <div class="role-row">
+        <span class="role-title">Software Engineer - Infrastructure</span>
+        <span class="role-date">May 2022 – August 2024</span>
+      </div>
+      <ul>
+        <li>Engineered backend systems for Zoom for Government, enabling IL4/FedRAMP-compliant video/chat services for federal agencies and contributing to $10M+ in contract wins.</li>
+        <li>Developed a custom CVE scanner in Go and GitLab CI, automating vulnerability triage and saving 30+ engineer hours per month.</li>
+        <li>Architected a Go-based Prometheus alerting service for GitOps/PagerDuty integration, streamlining on-call workflows and incident response.</li>
+        <li>Developed reusable Terraform modules to automate AWS infrastructure provisioning, reducing manual configuration errors across Kubernetes clusters.</li>
+      </ul>
+    </div>
+
+    <!-- Block 4: Motorola -->
+    <div class="resume-block">
+      <h3>Motorola Solutions <span class="location">Chicago, IL</span></h3>
+      <!-- Title 1 -->
+      <div class="role-row" style="margin-bottom: 0;">
+        <span class="role-title">Software Engineer II</span>
+        <span class="role-date">Nov 2019 – May 2022</span>
+      </div>
+      <!-- Title 2 -->
+      <div class="role-row">
+        <span class="role-title">Software Engineer I</span>
+        <span class="role-date">July 2018 – Nov 2019</span>
+      </div>
+      
+      <ul>
+        <li>Built and optimized a Node.js REST API for real-time connection management, implementing deterministic routing to eliminate lookup overhead, cutting worst case latency by 87% (2.3s → 0.3s).</li>
+        <li>Developed digital signal processing modules in C++ for encrypted voice transmission and containerized audio processing for safety-critical 911 dispatch systems.</li>
+        <li>Implemented load testing frameworks to validate system resilience under 1,600 concurrent radio calls, identifying and resolving critical performance bottlenecks.</li>
+        <li>Migrated messaging infrastructure from Kafka to Redis Pub/Sub, reducing latency for real-time delivery in a high-throughput environment.</li>
+      </ul>
+    </div>
+
+    <!-- Block 5: Education -->
+    <div class="resume-block">
+      <h2>Education</h2>
+      <h3>DePaul University <span class="location">Chicago, IL</span></h3>
+      <div class="role-row">
+        <span class="role-title">B.S. Computer Science</span>
+        <span class="role-date">June 2018</span>
+      </div>
+    </div>
+
+    <!-- Block 6: Skills -->
+    <div class="resume-block">
+      <h2>Technical Skills</h2>
+      <p style="font-size: 1rem;">
+        <strong>Languages:</strong> Python, Java, JavaScript, C++, Go<br>
+        <strong>Cloud:</strong> AWS (EKS, S3, RDS, ElastiCache, MSK, IAM, Route 53), Kubernetes, Terraform<br>
+        <strong>DevOps:</strong> GitHub Actions, GitLab CI, Docker, Helm, env0<br>
+        <strong>Data/Infra:</strong> Dagster, Kafka, Redis, Prometheus, Postgres, MySQL, OpenShift, RAG/LLM Engineering
+      </p>
+    </div>
+
+    <!-- Block 7: Awards -->
+    <div class="resume-block">
+      <h2>Awards and Interests</h2>
+      <p style="font-size: 1rem;">
+        Eagle Scout, Boy Scouts of America (May 2013)<br>
+        Backpacking, Guitar, Hiking, Cycling, Cross Country Skiing, Car Enthusiast
+      </p>
+    </div>
+
+    <!-- Block 8: Footer -->
+    <div class="resume-block no-print" style="margin-top: 3rem; text-align: center; padding-bottom: 2rem;">
+      <a onclick="switchView('home')" style="text-decoration: underline;">&larr; Back to Home</a>
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+  // 1. Years Calculation
+  const startDate = new Date(2017, 6, 1); 
+  const diff = new Date() - startDate;
+  const years = diff / (1000 * 60 * 60 * 24 * 365.25);
+  document.getElementById('exp').innerText = Math.floor(years); 
+
+  // 2. View Switching Logic
+  function switchView(target) {
+    const home = document.getElementById('home-view');
+    const resume = document.getElementById('resume-view');
+    const resumeBlocks = document.querySelectorAll('.resume-block');
+
+    if (target === 'resume') {
+      home.classList.add('fading-out');
+
+      setTimeout(() => {
+        home.classList.add('hidden');
+        home.classList.remove('fading-out');
+        
+        resume.classList.remove('hidden');
+        window.scrollTo(0, 0);
+
+        resumeBlocks.forEach((block, index) => {
+          setTimeout(() => {
+            block.classList.add('arrived');
+          }, index * 100); 
+        });
+
+      }, 300); 
+
+    } else {
+      resume.classList.add('hidden');
+      resumeBlocks.forEach(block => {
+        block.classList.remove('arrived');
+      });
+
+      home.classList.remove('hidden');
+      requestAnimationFrame(() => {
+        home.classList.remove('fading-out');
+      });
+    }
+  }
+</script>
+
 </body>
 </html>
