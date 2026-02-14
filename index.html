@@ -17,7 +17,8 @@
       font-family: system-ui, -apple-system, sans-serif;
       background: var(--bg);
       color: var(--fg);
-      overflow-x: hidden; /* Prevent horizontal scroll during animation */
+      overflow-x: hidden;
+      /* Prevent horizontal scroll during animation */
     }
 
     #container {
@@ -43,7 +44,7 @@
       min-height: 100vh;
       padding: 0 2rem;
       /* Absolute positioning ensures it doesn't push resume down initially */
-      position: absolute; 
+      position: absolute;
       top: 0;
       left: 0;
       right: 0;
@@ -51,7 +52,8 @@
 
     /* RESUME: Standard block flow */
     #resume-view {
-      display: none; /* Initially hidden from DOM layout */
+      display: none;
+      /* Initially hidden from DOM layout */
       padding: 2rem 2rem 4rem 2rem;
       min-height: 100vh;
     }
@@ -63,12 +65,14 @@
       line-height: 1.1;
       letter-spacing: -0.02em;
       white-space: nowrap;
-      position: relative; /* For cursor positioning */
+      position: relative;
+      /* For cursor positioning */
     }
 
     /* Ensure both H1s look identical regarding text rendering */
     #resume-name {
-      font-size: 2.2rem; /* Resume name is slightly smaller */
+      font-size: 2.2rem;
+      /* Resume name is slightly smaller */
       transform-origin: top left;
     }
 
@@ -83,6 +87,7 @@
       opacity: 0;
       transition: opacity 0.4s ease;
     }
+
     .fade-wrapper.visible {
       opacity: 1;
     }
@@ -111,7 +116,8 @@
       letter-spacing: -0.02em;
       color: var(--fg);
       white-space: nowrap;
-      transform-origin: top left; /* Critical for scaling from left */
+      transform-origin: top left;
+      /* Critical for scaling from left */
       pointer-events: none;
       /* We handle transition via JS or CSS class, using CSS here for performance */
       transition: transform 0.7s cubic-bezier(0.5, 0, 0.1, 1);
@@ -129,8 +135,16 @@
     }
 
     @keyframes blink {
-      0%, 50% { opacity: 1; }
-      50.01%, 100% { opacity: 0; }
+
+      0%,
+      50% {
+        opacity: 1;
+      }
+
+      50.01%,
+      100% {
+        opacity: 0;
+      }
     }
   </style>
 </head>
@@ -143,7 +157,7 @@
     <main id="home-view">
       <!-- Added a span around name text to easily exclude cursor from Ghost -->
       <h1 id="home-name"><span class="text-content">Matt Hallowell</span><span class="cursor"></span></h1>
-      
+
       <div id="home-content" class="fade-wrapper visible">
         <p>Senior Software Engineer specializing in distributed systems and applied AI.</p>
         <p style="margin-top:2rem;"><a onclick="goToResume()">Resume</a></p>
@@ -159,10 +173,12 @@
       </div>
 
       <div class="resume-block">
-        <h3>Slickdeals LLC <span class="location" style="float:right; font-weight:normal; font-size: 0.9rem; opacity: 0.7;">San Mateo, CA</span></h3>
+        <h3>Slickdeals LLC <span class="location"
+            style="float:right; font-weight:normal; font-size: 0.9rem; opacity: 0.7;">San Mateo, CA</span></h3>
         <div class="role-row">
           <span class="role-title">Senior Software Engineer</span>
-          <span class="role-date" style="display:block; font-size:0.9rem; margin-bottom: 0.5rem; opacity: 0.7;">August 2024 - Present</span>
+          <span class="role-date" style="display:block; font-size:0.9rem; margin-bottom: 0.5rem; opacity: 0.7;">August
+            2024 - Present</span>
         </div>
         <ul>
           <li>Designed and led migration from PHP monolith to distributed Python/Dagster platform.</li>
@@ -173,10 +189,12 @@
       </div>
 
       <div class="resume-block">
-        <h3>Previous Corp <span class="location" style="float:right; font-weight:normal; font-size: 0.9rem; opacity: 0.7;">Remote</span></h3>
+        <h3>Previous Corp <span class="location"
+            style="float:right; font-weight:normal; font-size: 0.9rem; opacity: 0.7;">Remote</span></h3>
         <div class="role-row">
           <span class="role-title">Software Engineer</span>
-          <span class="role-date" style="display:block; font-size:0.9rem; margin-bottom: 0.5rem; opacity: 0.7;">2021 - 2024</span>
+          <span class="role-date" style="display:block; font-size:0.9rem; margin-bottom: 0.5rem; opacity: 0.7;">2021 -
+            2024</span>
         </div>
         <ul>
           <li>Built scalable APIs using Go and gRPC.</li>
@@ -200,7 +218,7 @@
     const homeName = document.getElementById('home-name');
     const resumeName = document.getElementById('resume-name');
     const homeContent = document.getElementById('home-content');
-    
+
     // Select the actual text spans, ignoring the cursor
     const homeNameText = homeName.querySelector('.text-content');
     const resumeNameText = resumeName.querySelector('.text-content');
@@ -208,7 +226,7 @@
     async function goToResume() {
       // 1. Fade out home content
       homeContent.classList.remove('visible');
-      
+
       // Wait for fade out to finish
       await wait(400);
 
@@ -221,9 +239,9 @@
       // Problem: Resume view is display:none. 
       // Fix: Make it block but invisible, measure, then hide original name.
       resumeView.style.display = 'block';
-      resumeView.style.opacity = '1'; 
+      resumeView.style.opacity = '1';
       resumeName.style.visibility = 'hidden'; // Don't show the real one yet
-      
+
       const endRect = resumeNameText.getBoundingClientRect();
       const endFontSize = window.getComputedStyle(resumeName).fontSize;
 
@@ -234,7 +252,7 @@
       createAndAnimateGhost(startRect, endRect, startFontSize, endFontSize, 'Matt Hallowell', async () => {
         // This callback runs after animation completes:
         resumeName.style.visibility = 'visible';
-        
+
         // 4. Traffic Jam In
         const blocks = document.querySelectorAll('.resume-block');
         for (let i = 0; i < blocks.length; i++) {
@@ -247,14 +265,14 @@
     async function goToHome() {
       // 1. Reverse Traffic Jam (Fade out resume blocks)
       const blocks = Array.from(document.querySelectorAll('.resume-block'));
-      
+
       // Loop backwards or forwards? Usually backwards looks cool for exit, 
       // or forwards for "draining". Let's do reverse index for "peeling off".
       for (let i = blocks.length - 1; i >= 0; i--) {
         blocks[i].classList.remove('arrived');
         await wait(50); // Faster stagger for exit
       }
-      
+
       // Wait for the last block css transition to roughly finish
       await wait(400);
 
@@ -282,12 +300,12 @@
       const ghost = document.createElement('div');
       ghost.textContent = text;
       ghost.className = 'flying-ghost';
-      
+
       // Set initial state
       ghost.style.top = `${startRect.top}px`;
       ghost.style.left = `${startRect.left}px`;
       ghost.style.fontSize = startSize;
-      
+
       document.body.appendChild(ghost);
 
       // Force Reflow (browser needs to realize the element is there before we change CSS)
@@ -296,7 +314,7 @@
       // Calculate translation and scale
       const dX = endRect.left - startRect.left;
       const dY = endRect.top - startRect.top;
-      
+
       // Parse font sizes to numbers for scaling
       const sSizeVal = parseFloat(startSize);
       const eSizeVal = parseFloat(endSize);
@@ -313,4 +331,5 @@
     }
   </script>
 </body>
+
 </html>
