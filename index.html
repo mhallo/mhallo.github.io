@@ -2,256 +2,305 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Matt Hallowell – Senior Software Engineer</title>
-
-  <meta name="description" content="Senior Software Engineer specializing in distributed systems and applied AI." />
-  <meta name="color-scheme" content="light dark" />
-  <meta name="theme-color" content="#0b0e14" />
-  <link rel="canonical" href="https://gt3.dev" />
-
-  <!-- Structured Data for SEO -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Person",
-    "name": "Matt Hallowell",
-    "url": "https://gt3.dev",
-    "jobTitle": "Senior Software Engineer",
-    "alumniOf": "DePaul University",
-    "sameAs": [ "https://linkedin.com/in/mhallo", "https://github.com/mhallo" ],
-    "knowsAbout": [
-      "Distributed Systems Architecture", "Cloud Infrastructure (AWS, Kubernetes, EKS)",
-      "Infrastructure as Code (Terraform)", "Data Engineering (Polars, Dagster, ETL)",
-      "Applied AI (RAG, LLM Agents, Model Context Protocol)", "Backend Development (Python, Go, C++, Java, Node.js)",
-      "Real-time Systems (DSP)", "DevSecOps (FedRAMP, IL4)"
-    ]
-  }
-  </script>
-
-  <!-- Open Graph -->
-  <meta property="og:title" content="Matt Hallowell – Senior Software Engineer" />
-  <meta property="og:description"
-    content="Designing and scaling high-performance distributed systems with applied AI." />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://gt3.dev" />
-
   <style>
     :root {
       --bg: #0b0e14;
       --fg: #e6e6eb;
-      --muted: #9aa0a6;
       --accent: #7aa2f7;
-      --link-muted: #9aa0a6;
-      --divider: rgba(255, 255, 255, 0.08);
-      --btn-bg: rgba(255, 255, 255, 0.06);
-    }
-
-    @media (prefers-color-scheme: light) {
-      :root {
-        --bg: #f7f7fb;
-        --fg: #1a1a1a;
-        --muted: #555;
-        --accent: #3b6cff;
-        --link-muted: #555;
-        --divider: rgba(0, 0, 0, 0.08);
-        --btn-bg: rgba(0, 0, 0, 0.05);
-      }
+      --muted: #a9b1d6;
+      --hover-bg: rgba(122, 162, 247, 0.1);
     }
 
     body {
       margin: 0;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      font-family: system-ui, -apple-system, sans-serif;
       background: var(--bg);
       color: var(--fg);
-      display: grid;
-      place-items: center;
-      min-height: 100vh;
-      line-height: 1.55;
+      line-height: 1.6;
       overflow-x: hidden;
+      /* Always hide horizontal scroll */
+    }
+
+    /* 
+       State Class: home-active 
+       This locks the viewport so no scrollbar appears on the main screen 
+    */
+    body.home-active {
+      overflow: hidden;
+      height: 100vh;
     }
 
     #container {
       max-width: 680px;
-      padding: 2rem;
+      width: 100%;
+      margin: 0 auto;
+      box-sizing: border-box;
+      position: relative;
+    }
+
+    /* Common view styles */
+    .view {
       width: 100%;
       box-sizing: border-box;
-      min-height: 100vh;
+    }
+
+    /* HOME: Flex centered */
+    #home-view {
       display: flex;
       flex-direction: column;
       justify-content: center;
+      min-height: 100vh;
+      padding: 2rem;
+      /* Reduced padding slightly to ensure fit on smaller laptops */
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+    }
+
+    /* RESUME: Standard block flow */
+    #resume-view {
+      display: none;
+      padding: 4rem 2rem 6rem 2rem;
+      min-height: 100vh;
     }
 
     /* TYPOGRAPHY */
     h1 {
-      margin-bottom: 0.4rem;
+      margin: 0 0 1rem 0;
       font-size: 2.6rem;
+      font-weight: 700;
+      line-height: 1.1;
       letter-spacing: -0.02em;
-      font-weight: 600;
-      display: inline-flex;
-      align-items: baseline;
+      white-space: nowrap;
+      position: relative;
+      color: var(--fg);
     }
 
-    h2 {
-      font-size: 1.4rem;
-      margin-top: 2rem;
-      margin-bottom: 1rem;
-      border-bottom: 1px solid var(--divider);
-      padding-bottom: 0.5rem;
-      color: var(--fg);
+    /* Home Name - Initial State for Animation */
+    #home-name {
+      opacity: 0;
+      /* Starts hidden */
+      transition: opacity 1s ease;
+    }
+
+    #resume-name {
+      font-size: 2.2rem;
+      transform-origin: top left;
+      margin-bottom: 2.5rem;
     }
 
     h3 {
-      font-size: 1.15rem;
-      margin-bottom: 0.2rem;
-      margin-top: 1.8rem;
-      color: var(--accent);
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-    }
-
-    p,
-    li {
-      color: var(--muted);
-      font-size: 1.05rem;
-      margin-top: 0.6rem;
-      text-wrap: pretty;
-    }
-
-    ul {
-      padding-left: 1.1rem;
-      margin-top: 0.6rem;
-    }
-
-    li {
-      margin-bottom: 0.4rem;
-      font-size: 0.95rem;
-    }
-
-    /* Layout for Title/Date Rows */
-    .role-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      font-size: 0.9rem;
-      color: var(--muted);
-      margin-bottom: 0.2rem;
-    }
-
-    .role-title {
-      font-weight: 500;
+      margin: 0 0 0.2rem 0;
+      font-size: 1.1rem;
+      font-weight: 600;
       color: var(--fg);
-      opacity: 0.9;
     }
 
-    .role-date {
-      opacity: 0.8;
-      font-variant-numeric: tabular-nums;
-    }
-
-    .location {
-      font-weight: normal;
-      font-size: 0.9rem;
-      opacity: 0.7;
+    p {
+      margin: 0 0 1rem 0;
       color: var(--muted);
     }
 
-    .current {
-      margin-top: 1rem;
-      max-width: 60ch;
-    }
-
-    .divider {
-      margin: 1.4rem 0;
-      border: none;
-      height: 1px;
-      background: var(--divider);
-      width: 60%;
-    }
-
-    /* LINKS & BUTTONS */
     a {
       color: var(--accent);
       text-decoration: none;
       cursor: pointer;
-      transition: opacity 0.2s ease;
+      transition: color 0.2s;
     }
 
     a:hover {
-      opacity: 0.7;
-    }
-
-    .previous {
-      margin-top: 0.6rem;
-      font-size: 1rem;
-    }
-
-    .previous a {
-      color: var(--link-muted);
       text-decoration: underline;
-      text-decoration-style: dotted;
-      text-underline-offset: 3px;
     }
 
-    .previous a:hover {
-      text-decoration-style: solid;
+    strong {
+      color: var(--fg);
+      font-weight: 600;
     }
 
-    nav {
-      margin-top: 1.8rem;
-    }
-
-    nav a {
-      margin-right: 1rem;
-      color: var(--accent);
-      text-decoration: none;
-    }
-
-    .btn-group {
-      display: flex;
-      gap: 0.8rem;
-      margin-top: 0.5rem;
-    }
-
-    .btn {
-      display: inline-block;
-      padding: 0.4rem 0.8rem;
-      border: 1px solid var(--divider);
-      border-radius: 6px;
-      font-size: 0.85rem;
-      background: var(--btn-bg);
+    /* HOME SPECIFIC */
+    .current {
+      font-size: 1.05rem;
       color: var(--fg);
     }
 
-    .btn:hover {
+    .previous {
+      font-size: 0.95rem;
+      color: var(--muted);
+    }
+
+    .divider {
+      border: 0;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      margin: 2rem 0;
+    }
+
+    /* SOCIAL BUTTONS */
+    .social-row {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      justify-content: flex-start;
+    }
+
+    .social-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--muted);
+      transition: all 0.2s ease;
+      border: 1px solid transparent;
+    }
+
+    .social-btn svg {
+      width: 20px;
+      height: 20px;
+      fill: currentColor;
+    }
+
+    .social-btn:hover {
+      background: var(--hover-bg);
+      color: var(--accent);
       border-color: var(--accent);
+      transform: translateY(-2px);
+      text-decoration: none;
+    }
+
+    /* ELEGANT ACTION BUTTONS */
+    .action-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.8rem 1.5rem;
+      background: rgba(122, 162, 247, 0.08);
+      border: 1px solid rgba(122, 162, 247, 0.15);
+      border-radius: 12px;
+      color: var(--accent);
+      font-weight: 500;
+      font-size: 1rem;
+      text-decoration: none;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      cursor: pointer;
+    }
+
+    .action-btn svg {
+      width: 1.2em;
+      height: 1.2em;
+      fill: currentColor;
+      transition: transform 0.3s ease;
+    }
+
+    .action-btn:hover {
+      background: rgba(122, 162, 247, 0.15);
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 20px rgba(122, 162, 247, 0.15);
+      text-decoration: none;
+      color: #fff;
+    }
+
+    /* Move arrow right on hover */
+    .action-btn:not(.back-btn):hover svg {
+      transform: translateX(4px);
+    }
+
+    /* Move arrow left on hover for back button */
+    .action-btn.back-btn:hover svg {
+      transform: translateX(-4px);
+    }
+
+
+    /* RESUME SPECIFIC STYLES */
+    .location {
+      float: right;
+      font-weight: normal;
+      font-size: 0.9rem;
+      color: var(--muted);
+      opacity: 0.8;
+    }
+
+    .role-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.8rem;
+      font-size: 0.95rem;
       color: var(--accent);
     }
 
-    /* ANIMATIONS */
+    .role-date {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    ul {
+      margin: 0;
+      padding-left: 1.2rem;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    li {
+      margin-bottom: 0.4rem;
+    }
+
+    /* ANIMATION UTILITIES */
+
+    /* Wrapper handles the "Whole page fades out" when leaving */
+    .fade-wrapper {
+      transition: opacity 0.4s ease;
+    }
+
+    .fade-wrapper.hidden {
+      opacity: 0;
+    }
+
+    /* Blocks handle the "Traffic Jam" sliding up */
+    .home-block,
+    .resume-block {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+
+    /* When the block has 'arrived' */
+    .home-block.visible,
+    .resume-block.arrived {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* GHOST ANIMATION ELEMENT */
+    .flying-ghost {
+      position: fixed;
+      z-index: 9999;
+      margin: 0;
+      padding: 0;
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      color: var(--fg);
+      white-space: nowrap;
+      transform-origin: top left;
+      pointer-events: none;
+      transition: transform 0.7s cubic-bezier(0.5, 0, 0.1, 1);
+    }
+
+    /* CURSOR ANIMATION */
     .cursor {
       display: inline-block;
       width: 0.55ch;
       height: 1em;
-      background: currentColor;
+      background: var(--accent);
       margin-left: 0.15ch;
+      vertical-align: text-bottom;
       animation: blink 1.1s steps(1) infinite;
-      vertical-align: baseline;
-      border-radius: 1px;
-    }
-
-    @keyframes fadeUp {
-      from {
-        opacity: 0;
-        transform: translateY(12px);
-      }
-
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
     }
 
     @keyframes blink {
@@ -267,62 +316,17 @@
       }
     }
 
-    .fade-transition.slow {
-      transition:
-        opacity 0.9s cubic-bezier(0.25, 1, 0.3, 1),
-        transform 0.9s cubic-bezier(0.25, 1, 0.3, 1),
-        filter 0.9s cubic-bezier(0.25, 1, 0.3, 1);
-    }
+    /* Responsive */
+    @media (max-width: 600px) {
+      .location {
+        float: none;
+        display: block;
+        margin-top: 0.2rem;
+      }
 
-
-    /* VIEW SWITCHING UTILS */
-    .hidden {
-      display: none !important;
-    }
-
-    .fade-transition {
-      transition:
-        opacity 0.45s cubic-bezier(0.25, 1, 0.3, 1),
-        transform 0.45s cubic-bezier(0.25, 1, 0.3, 1),
-        filter 0.45s cubic-bezier(0.25, 1, 0.3, 1);
-      opacity: 1;
-      transform: translateY(0);
-      filter: blur(0);
-    }
-
-    .fading-out {
-      opacity: 0;
-      transform: translateY(-12px);
-      filter: blur(6px);
-      pointer-events: none;
-    }
-
-    .resume-block {
-      opacity: 0;
-      transform: translateY(40px);
-      filter: blur(6px);
-      transition:
-        opacity 0.8s cubic-bezier(0.25, 1, 0.3, 1),
-        transform 0.8s cubic-bezier(0.25, 1, 0.3, 1),
-        filter 0.8s cubic-bezier(0.25, 1, 0.3, 1);
-    }
-
-    .resume-block.arrived {
-      opacity: 1;
-      transform: translateY(0);
-      filter: blur(0);
-    }
-
-    #resume-view.fade-transition {
-      transition: opacity 0.3s ease, transform 0.3s ease;
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    #resume-view.fading-out {
-      opacity: 0;
-      transform: translateY(10px);
-      pointer-events: none;
+      .role-row {
+        flex-direction: column;
+      }
     }
   </style>
 </head>
@@ -331,74 +335,96 @@
 
   <div id="container">
 
-    <!-- ================= MAIN HOME PAGE ================= -->
-    <main id="home-view" class="fade-transition slow fading-out">
-      <h1>
-        Matt Hallowell<span class="cursor" aria-hidden="true"></span>
-      </h1>
+    <!-- HOME VIEW -->
+    <main id="home-view">
+      <h1 id="home-name"><span class="text-content">Matt Hallowell</span><span class="cursor"></span></h1>
 
-      <p class="current">
-        With over <span id="exp"></span> years of experience in distributed systems,
-        I design and scale high-performance architectures — focusing on
-        vectorized data processing, real-time systems and applied AI.
-      </p>
+      <div id="home-content" class="fade-wrapper">
 
-      <p class="current">
-        Most recently, I re-architected a legacy monolith into a distributed
-        Polars & Dagster pipeline — processing <strong>40M+</strong> daily records
-        and reducing ETL runtime by
-        <strong>97% <span style="white-space: nowrap;">(5.5h → 16m)</span></strong>.
-      </p>
+        <!-- Social Buttons -->
+        <div class="home-block social-row">
+          <a href="https://github.com/mhallo" target="_blank" class="social-btn" aria-label="GitHub">
+            <svg viewBox="0 0 24 24">
+              <path
+                d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+            </svg>
+          </a>
+          <a href="https://linkedin.com/in/mhallo" target="_blank" class="social-btn" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24">
+              <path
+                d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+            </svg>
+          </a>
+          <a href="mailto:hello@gt3.dev" class="social-btn" aria-label="Email">
+            <svg viewBox="0 0 24 24">
+              <path
+                d="M0 3v18h24v-18h-24zm6.623 7.929l-4.623 5.712v-11.174l4.623 5.462zm5.377 2.738l-5.364-6.338 11.364-.001-5.364 6.339zm5.377-2.738l4.623-5.462v11.175l-4.623-5.713zm-11.024 1.327l-4.353 5.376h20.002l-4.353-5.376-5.647 6.671-5.649-6.671z" />
+            </svg>
+          </a>
+        </div>
 
-      <p class="current">
-        I'm currently architecting a Model Context Protocol server to enable agentic workflows and optimizing RAG
-        pipelines.
-      </p>
+        <div class="home-block">
+          <p class="current">
+            With over <span id="exp">6</span> years of experience in distributed systems,
+            I design and scale high-performance architectures — focusing on
+            vectorized data processing, real-time systems, and applied AI.
+          </p>
+        </div>
 
-      <hr class="divider" />
+        <div class="home-block">
+          <p class="current">
+            Most recently, I re-architected a legacy monolith into a distributed
+            Polars & Dagster pipeline — processing <strong>40M+</strong> daily records
+            and reducing ETL runtime by
+            <strong>97% <span style="white-space: nowrap;">(5.5h → 16m)</span></strong>.
+          </p>
+        </div>
 
-      <p class="previous">
-        Previously, I engineered <a href="https://www.zoom.us" target="_blank" rel="noopener">Zoom</a> for <a
-          href="https://www.zoomgov.com" target="_blank" rel="noopener">Government</a> infrastructure
-        (FedRAMP/IL4) to support federal agencies.
-      </p>
+        <div class="home-block">
+          <p class="current">
+            I'm currently architecting a Model Context Protocol server to enable agentic workflows and optimizing RAG
+            pipelines.
+          </p>
+        </div>
 
-      <p class="previous">
-        Before that, I developed low-latency voice processing
-        systems and DSP encryption in C++ at <a href="https://www.motorolasolutions.com" target="_blank"
-          rel="noopener">Motorola</a> for mission-critical
-        911 dispatch communications.
-      </p>
+        <div class="home-block">
+          <hr class="divider" />
+        </div>
 
-      <p class="previous" style="margin-top: 2rem;">
-        For professional inquiries: <a href="mailto:hello@gt3.dev">hello@gt3.dev</a>
-      </p>
+        <div class="home-block">
+          <p class="previous">
+            Previously, I engineered <a href="https://www.zoom.us" target="_blank" rel="noopener">Zoom</a> for <a
+              href="https://www.zoomgov.com" target="_blank" rel="noopener">Government</a> infrastructure
+            (FedRAMP/IL4) to support federal agencies.
+          </p>
+        </div>
 
-      <nav>
-        <a href="https://github.com/mhallo" target="_blank" rel="noopener">GitHub</a>
-        <a href="https://linkedin.com/in/mhallo" target="_blank" rel="noopener">LinkedIn</a>
-        <a onclick="switchView('resume')">Resume</a>
-      </nav>
+        <div class="home-block">
+          <p class="previous">
+            Before that, I developed low-latency voice processing
+            systems and DSP encryption in C++ at <a href="https://www.motorolasolutions.com" target="_blank"
+              rel="noopener">Motorola</a> for mission-critical 911 dispatch communications.
+          </p>
+        </div>
+
+        <div class="home-block" style="margin-top: 3rem;">
+          <a onclick="goToResume()" class="action-btn">
+            <span>View Full Resume</span>
+            <svg viewBox="0 0 24 24">
+              <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg>
+          </a>
+        </div>
+
+      </div>
     </main>
 
+    <!-- RESUME VIEW -->
+    <div id="resume-view">
+      <h1 id="resume-name"><span class="text-content">Matt Hallowell</span></h1>
 
-    <!-- ================= RESUME VIEW ================= -->
-    <div id="resume-view" class="hidden">
-
-      <!-- Block 1: Header -->
-      <div class="resume-block"
-        style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap;">
-        <div>
-          <h1 style="font-size: 2.2rem; margin-bottom: 0;">Matt Hallowell</h1>
-          <p style="margin-top: 0.2rem;">Senior Software Engineer</p>
-        </div>
-        <div class="btn-group">
-          <a href="mailto:hello@gt3.dev" class="btn">Contact</a>
-          <a onclick="switchView('home')" class="btn" style="border-color: transparent;">✕ Close</a>
-        </div>
-      </div>
-
-      <!-- Block 2: Slickdeals -->
+      <!-- Experience 1 -->
       <div class="resume-block">
         <h3>Slickdeals LLC <span class="location">San Mateo, CA</span></h3>
         <div class="role-row">
@@ -417,7 +443,7 @@
         </ul>
       </div>
 
-      <!-- Block 3: Zoom -->
+      <!-- Experience 2 -->
       <div class="resume-block">
         <h3>Zoom Video Communications <span class="location">Seattle, WA</span></h3>
         <div class="role-row">
@@ -436,20 +462,17 @@
         </ul>
       </div>
 
-      <!-- Block 4: Motorola -->
+      <!-- Experience 3 -->
       <div class="resume-block">
         <h3>Motorola Solutions <span class="location">Chicago, IL</span></h3>
-        <!-- Title 1 -->
-        <div class="role-row" style="margin-bottom: 0;">
-          <span class="role-title">Software Engineer II</span>
-          <span class="role-date">Nov 2019 – May 2022</span>
-        </div>
-        <!-- Title 2 -->
         <div class="role-row">
-          <span class="role-title">Software Engineer I</span>
-          <span class="role-date">July 2018 – Nov 2019</span>
+          <span class="role-title">Software Engineer II</span>
+          <span class="role-date">November 2019 – May 2022</span>
         </div>
-
+        <div class="role-row" style="margin-top:-0.5rem; opacity:0.8">
+          <span class="role-title">Software Engineer I</span>
+          <span class="role-date">July 2018 – November 2019</span>
+        </div>
         <ul>
           <li>Built and optimized a Node.js REST API for real-time connection management, implementing deterministic
             routing to eliminate lookup overhead, cutting worst case latency by 87% (2.3s → 0.3s).</li>
@@ -462,9 +485,11 @@
         </ul>
       </div>
 
-      <!-- Block 5: Education -->
+      <!-- Education -->
       <div class="resume-block">
-        <h2>Education</h2>
+        <h3
+          style="margin-bottom:0.5rem; text-transform: uppercase; letter-spacing: 1px; font-size: 0.9rem; color: var(--accent);">
+          Education</h3>
         <h3>DePaul University <span class="location">Chicago, IL</span></h3>
         <div class="role-row">
           <span class="role-title">B.S. Computer Science</span>
@@ -472,10 +497,12 @@
         </div>
       </div>
 
-      <!-- Block 6: Skills -->
+      <!-- Skills -->
       <div class="resume-block">
-        <h2>Technical Skills</h2>
-        <p style="font-size: 1rem;">
+        <h3
+          style="margin-bottom:0.5rem; text-transform: uppercase; letter-spacing: 1px; font-size: 0.9rem; color: var(--accent);">
+          Technical Skills</h3>
+        <p style="font-size: 0.95rem;">
           <strong>Languages:</strong> Python, Java, JavaScript, C++, Go<br>
           <strong>Cloud:</strong> AWS (EKS, S3, RDS, ElastiCache, MSK, IAM, Route 53), Kubernetes, Terraform<br>
           <strong>DevOps:</strong> GitHub Actions, GitLab CI, Docker, Helm, env0<br>
@@ -484,97 +511,178 @@
         </p>
       </div>
 
-      <!-- Block 7: Awards -->
+      <!-- Awards & Interests -->
       <div class="resume-block">
-        <h2>Awards and Interests</h2>
-        <p style="font-size: 1rem;">
-          Eagle Scout, Boy Scouts of America (May 2013)<br>
+        <h3
+          style="margin-bottom:0.5rem; text-transform: uppercase; letter-spacing: 1px; font-size: 0.9rem; color: var(--accent);">
+          Awards & Interests</h3>
+        <p style="font-size: 0.95rem;">
+          <strong>Eagle Scout</strong>, Boy Scouts of America (May 2013)<br>
           Backpacking, Guitar, Hiking, Cycling, Cross Country Skiing, Car Enthusiast
         </p>
       </div>
 
-      <!-- Block 8: Footer -->
-      <div class="resume-block no-print" style="margin-top: 3rem; text-align: center; padding-bottom: 2rem;">
-        <a onclick="switchView('home')" style="text-decoration: underline;">&larr; Back to Home</a>
+      <!-- Bottom Back Button -->
+      <div class="resume-block" style="margin-top: 4rem; margin-bottom: 2rem;">
+        <a onclick="goToHome()" class="action-btn back-btn">
+          <svg viewBox="0 0 24 24">
+            <path d="M19 12H5M12 19l-7-7 7-7" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg>
+          <span>Back Home</span>
+        </a>
       </div>
-
     </div>
 
   </div>
 
   <script>
-    // 1. Years Calculation
-    const startDate = new Date(2017, 6, 1);
-    const diff = new Date() - startDate;
-    const years = diff / (1000 * 60 * 60 * 24 * 365.25);
-    document.getElementById('exp').innerText = Math.floor(years);
+    // Calculate Years of Experience
+    const startYear = 2018;
+    const currentYear = new Date().getFullYear();
+    const expSpan = document.getElementById('exp');
+    if (expSpan) expSpan.innerText = currentYear - startYear;
 
-    // 2. View Switching Logic
-    function switchView(target) {
-      const home = document.getElementById('home-view');
-      const resume = document.getElementById('resume-view');
-      const resumeBlocks = document.querySelectorAll('.resume-block');
+    const wait = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
-      if (target === 'resume') {
-        home.classList.add('fading-out');
+    const homeView = document.getElementById('home-view');
+    const resumeView = document.getElementById('resume-view');
+    const homeName = document.getElementById('home-name');
+    const resumeName = document.getElementById('resume-name');
+    const homeContent = document.getElementById('home-content');
 
-        setTimeout(() => {
-          home.classList.add('hidden');
-          home.classList.remove('fading-out');
+    const homeNameText = homeName.querySelector('.text-content');
+    const resumeNameText = resumeName.querySelector('.text-content');
 
-          resume.classList.remove('hidden');
-          resume.classList.add('fade-transition');
-          window.scrollTo(0, 0);
+    // INITIAL LOAD ANIMATION
+    window.addEventListener('load', async () => {
+      // Add home-active class immediately to lock scroll
+      document.body.classList.add('home-active');
 
-          resumeBlocks.forEach((block, index) => {
-            block.classList.remove('arrived');
-            setTimeout(() => {
-              block.classList.add('arrived');
-            }, index * 100);
-          });
+      // 1. Fade Name In
+      homeName.style.opacity = 1;
 
-        }, 300);
+      // Wait a bit before content starts arriving
+      await wait(600);
 
+      // 2. Traffic Jam the Home Blocks in
+      const homeBlocks = document.querySelectorAll('.home-block');
+      for (let i = 0; i < homeBlocks.length; i++) {
+        homeBlocks[i].classList.add('visible');
+        await wait(100);
       }
-      else {
-        // fade resume OUT
-        resume.classList.add('fading-out');
-
-        resumeBlocks.forEach(block => {
-          block.classList.remove('arrived');
-        });
-
-        setTimeout(() => {
-          resume.classList.add('hidden');
-          resume.classList.remove('fading-out');
-
-          // prepare home to fade IN the same way resume does
-          home.classList.remove('hidden');
-          home.classList.add('fading-out');
-
-          requestAnimationFrame(() => {
-            home.classList.remove('fading-out');
-          });
-
-        }, 300);
-
-      }
-    }
-    // 3. Fade in on initial page load
-    window.addEventListener("DOMContentLoaded", () => {
-      const home = document.getElementById("home-view");
-
-      requestAnimationFrame(() => {
-        home.classList.remove("fading-out");
-
-        // remove slow after first animation so navigation stays snappy
-        setTimeout(() => {
-          home.classList.remove("slow");
-        }, 900);
-      });
     });
-  </script>
 
+    async function goToResume() {
+      // Remove class to allow scrolling on resume
+      document.body.classList.remove('home-active');
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+
+      // 1. Fade out the wrapper of home content
+      homeContent.classList.add('hidden');
+
+      await wait(400);
+
+      // 2. Prepare Transition
+      const startRect = homeNameText.getBoundingClientRect();
+      const startFontSize = window.getComputedStyle(homeName).fontSize;
+
+      resumeView.style.display = 'block';
+      resumeView.style.opacity = '1';
+      resumeName.style.visibility = 'hidden';
+
+      const endRect = resumeNameText.getBoundingClientRect();
+      const endFontSize = window.getComputedStyle(resumeName).fontSize;
+
+      homeView.style.display = 'none';
+
+      // RESET HOME: Remove 'visible' from blocks so they can re-animate later
+      document.querySelectorAll('.home-block').forEach(b => b.classList.remove('visible'));
+
+      // 3. Ghost Animation
+      createAndAnimateGhost(startRect, endRect, startFontSize, endFontSize, 'Matt Hallowell', async () => {
+        resumeName.style.visibility = 'visible';
+
+        // 4. Traffic Jam Resume Blocks
+        const blocks = document.querySelectorAll('.resume-block');
+        for (let i = 0; i < blocks.length; i++) {
+          blocks[i].classList.add('arrived');
+          await wait(100);
+        }
+      });
+    }
+
+    async function goToHome() {
+      // Scroll to top first to ensure transition looks right
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+
+      // 1. Exit Resume (Reverse Traffic Jam)
+      const blocks = Array.from(document.querySelectorAll('.resume-block'));
+      for (let i = blocks.length - 1; i >= 0; i--) {
+        blocks[i].classList.remove('arrived');
+        await wait(50);
+      }
+
+      await wait(400);
+
+      // Add class back to lock scroll on home
+      document.body.classList.add('home-active');
+
+      // 2. Prepare Transition
+      const startRect = resumeNameText.getBoundingClientRect();
+      const startFontSize = window.getComputedStyle(resumeName).fontSize;
+
+      homeView.style.display = 'flex';
+      homeName.style.visibility = 'hidden';
+      // Ensure wrapper is visible, but individual blocks are hidden (removed 'visible' class in previous function)
+      homeContent.classList.remove('hidden');
+
+      resumeView.style.display = 'none';
+
+      const endRect = homeNameText.getBoundingClientRect();
+      const endFontSize = window.getComputedStyle(homeName).fontSize;
+
+      // 3. Ghost Animation
+      createAndAnimateGhost(startRect, endRect, startFontSize, endFontSize, 'Matt Hallowell', async () => {
+        homeName.style.visibility = 'visible';
+
+        // 4. Traffic Jam Home Blocks (Re-Entry)
+        const homeBlocks = document.querySelectorAll('.home-block');
+        for (let i = 0; i < homeBlocks.length; i++) {
+          homeBlocks[i].classList.add('visible');
+          await wait(100);
+        }
+      });
+    }
+
+    function createAndAnimateGhost(startRect, endRect, startSize, endSize, text, onComplete) {
+      const ghost = document.createElement('div');
+      ghost.textContent = text;
+      ghost.className = 'flying-ghost';
+
+      ghost.style.top = `${startRect.top}px`;
+      ghost.style.left = `${startRect.left}px`;
+      ghost.style.fontSize = startSize;
+
+      document.body.appendChild(ghost);
+      ghost.getBoundingClientRect(); // Force Reflow
+
+      const dX = endRect.left - startRect.left;
+      const dY = endRect.top - startRect.top;
+
+      const sSizeVal = parseFloat(startSize);
+      const eSizeVal = parseFloat(endSize);
+      const scale = eSizeVal / sSizeVal;
+
+      ghost.style.transform = `translate(${dX}px, ${dY}px) scale(${scale})`;
+
+      setTimeout(() => {
+        ghost.remove();
+        if (onComplete) onComplete();
+      }, 700);
+    }
+  </script>
 </body>
 
 </html>
