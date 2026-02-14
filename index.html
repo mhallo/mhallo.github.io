@@ -9,9 +9,7 @@
     :root {
       --bg: #0b0e14;
       --fg: #e6e6eb;
-      --muted: #9aa0a6;
       --accent: #7aa2f7;
-      --divider: rgba(255, 255, 255, 0.08);
     }
 
     body {
@@ -19,21 +17,43 @@
       font-family: system-ui, -apple-system, sans-serif;
       background: var(--bg);
       color: var(--fg);
-      display: grid;
-      place-items: center;
-      min-height: 100vh;
-      overflow-x: hidden;
+      overflow-x: hidden; /* Prevent horizontal scroll during animation */
     }
 
     #container {
       max-width: 680px;
-      padding: 2rem;
+      width: 100%;
+      margin: 0 auto;
+      box-sizing: border-box;
+      position: relative;
+    }
+
+    /* Common view styles */
+    .view {
       width: 100%;
       box-sizing: border-box;
-      min-height: 100vh;
+    }
+
+    /* HOME: Flex centered */
+    #home-view {
       display: flex;
       flex-direction: column;
       justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 0 2rem;
+      /* Absolute positioning ensures it doesn't push resume down initially */
+      position: absolute; 
+      top: 0;
+      left: 0;
+      right: 0;
+    }
+
+    /* RESUME: Standard block flow */
+    #resume-view {
+      display: none; /* Initially hidden from DOM layout */
+      padding: 2rem 2rem 4rem 2rem;
+      min-height: 100vh;
     }
 
     h1 {
@@ -43,10 +63,13 @@
       line-height: 1.1;
       letter-spacing: -0.02em;
       white-space: nowrap;
+      position: relative; /* For cursor positioning */
     }
 
+    /* Ensure both H1s look identical regarding text rendering */
     #resume-name {
-      font-size: 2.2rem;
+      font-size: 2.2rem; /* Resume name is slightly smaller */
+      transform-origin: top left;
     }
 
     a {
@@ -55,23 +78,21 @@
       cursor: pointer;
     }
 
-    .view {
-      position: relative;
-    }
-
-    .fade-in {
+    /* FADE UTILITIES */
+    .fade-wrapper {
       opacity: 0;
       transition: opacity 0.4s ease;
     }
-
-    .fade-in.visible {
+    .fade-wrapper.visible {
       opacity: 1;
     }
 
+    /* RESUME BLOCKS (Traffic Jam) */
     .resume-block {
       opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 0.5s ease, transform 0.5s ease;
+      transform: translateY(30px);
+      transition: opacity 0.4s ease, transform 0.4s ease;
+      margin-top: 2rem;
     }
 
     .resume-block.arrived {
@@ -79,6 +100,7 @@
       transform: translateY(0);
     }
 
+    /* GHOST ANIMATION ELEMENT */
     .flying-ghost {
       position: fixed;
       z-index: 9999;
@@ -89,133 +111,206 @@
       letter-spacing: -0.02em;
       color: var(--fg);
       white-space: nowrap;
-      transform-origin: top left;
-      transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1), font-size 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+      transform-origin: top left; /* Critical for scaling from left */
+      pointer-events: none;
+      /* We handle transition via JS or CSS class, using CSS here for performance */
+      transition: transform 0.7s cubic-bezier(0.5, 0, 0.1, 1);
     }
 
+    /* CURSOR ANIMATION */
     .cursor {
       display: inline-block;
       width: 0.55ch;
       height: 1em;
       background: currentColor;
       margin-left: 0.15ch;
+      vertical-align: text-bottom;
       animation: blink 1.1s steps(1) infinite;
     }
 
     @keyframes blink {
-
-      0%,
-      50% {
-        opacity: 1
-      }
-
-      50.01%,
-      100% {
-        opacity: 0
-      }
+      0%, 50% { opacity: 1; }
+      50.01%, 100% { opacity: 0; }
     }
   </style>
 </head>
 
 <body>
+
   <div id="container">
 
-    <!-- HOME -->
-    <main id="home-view" class="view">
-      <h1 id="home-name">Matt Hallowell<span class="cursor"></span></h1>
-      <div id="home-content" class="fade-in visible">
+    <!-- HOME VIEW -->
+    <main id="home-view">
+      <!-- Added a span around name text to easily exclude cursor from Ghost -->
+      <h1 id="home-name"><span class="text-content">Matt Hallowell</span><span class="cursor"></span></h1>
+      
+      <div id="home-content" class="fade-wrapper visible">
         <p>Senior Software Engineer specializing in distributed systems and applied AI.</p>
-        <p style="margin-top:2rem;"><a onclick="animateTransition('toResume')">Resume</a></p>
+        <p style="margin-top:2rem;"><a onclick="goToResume()">Resume</a></p>
       </div>
     </main>
 
-    <!-- RESUME -->
-    <div id="resume-view" class="view" style="opacity:0; pointer-events:none;">
-      <h1 id="resume-name">Matt Hallowell</h1>
-      <div class="resume-block fade-in">
+    <!-- RESUME VIEW -->
+    <div id="resume-view">
+      <h1 id="resume-name"><span class="text-content">Matt Hallowell</span></h1>
+
+      <div class="resume-block">
         <p>Senior Software Engineer</p>
       </div>
-      <div class="resume-block fade-in" style="margin-top:2rem;">
-        <p>Experience details here...</p>
+
+      <div class="resume-block">
+        <h3>Slickdeals LLC <span class="location" style="float:right; font-weight:normal; font-size: 0.9rem; opacity: 0.7;">San Mateo, CA</span></h3>
+        <div class="role-row">
+          <span class="role-title">Senior Software Engineer</span>
+          <span class="role-date" style="display:block; font-size:0.9rem; margin-bottom: 0.5rem; opacity: 0.7;">August 2024 - Present</span>
+        </div>
+        <ul>
+          <li>Designed and led migration from PHP monolith to distributed Python/Dagster platform.</li>
+          <li>Redesigned ETL logic using Polars and distributed EKS fan-out jobs.</li>
+          <li>Architected a Model Context Protocol (MCP) server.</li>
+          <li>Modernized DevEx pipelines using uv-based Python monorepo and ArgoCD automation.</li>
+        </ul>
       </div>
-      <div class="resume-block fade-in" style="margin-top:3rem;">
-        <a onclick="animateTransition('toHome')">← Back Home</a>
+
+      <div class="resume-block">
+        <h3>Previous Corp <span class="location" style="float:right; font-weight:normal; font-size: 0.9rem; opacity: 0.7;">Remote</span></h3>
+        <div class="role-row">
+          <span class="role-title">Software Engineer</span>
+          <span class="role-date" style="display:block; font-size:0.9rem; margin-bottom: 0.5rem; opacity: 0.7;">2021 - 2024</span>
+        </div>
+        <ul>
+          <li>Built scalable APIs using Go and gRPC.</li>
+          <li>Managed Kubernetes clusters and CI/CD pipelines.</li>
+        </ul>
+      </div>
+
+      <div class="resume-block">
+        <a onclick="goToHome()">← Back Home</a>
       </div>
     </div>
 
   </div>
 
   <script>
-    function animateTransition(direction) {
-      const homeView = document.getElementById('home-view');
-      const resumeView = document.getElementById('resume-view');
-      const homeName = document.getElementById('home-name');
-      const resumeName = document.getElementById('resume-name');
-      const homeContent = document.getElementById('home-content');
-      const resumeBlocks = resumeView.querySelectorAll('.resume-block');
+    // Utility for cleaner async/await delays
+    const wait = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
-      const goingToResume = direction === 'toResume';
-      const fromEl = goingToResume ? homeName : resumeName;
-      const toEl = goingToResume ? resumeName : homeName;
-      const fromContent = goingToResume ? homeContent : resumeBlocks;
-      const toView = goingToResume ? resumeView : homeView;
+    const homeView = document.getElementById('home-view');
+    const resumeView = document.getElementById('resume-view');
+    const homeName = document.getElementById('home-name');
+    const resumeName = document.getElementById('resume-name');
+    const homeContent = document.getElementById('home-content');
+    
+    // Select the actual text spans, ignoring the cursor
+    const homeNameText = homeName.querySelector('.text-content');
+    const resumeNameText = resumeName.querySelector('.text-content');
 
-      // Fade out content first
-      if (goingToResume) {
-        homeContent.classList.remove('visible');
-      } else {
-        resumeBlocks.forEach(b => b.classList.remove('arrived'));
+    async function goToResume() {
+      // 1. Fade out home content
+      homeContent.classList.remove('visible');
+      
+      // Wait for fade out to finish
+      await wait(400);
+
+      // 2. Prepare the Transition
+      // We need to measure the Start position (Home Name)
+      const startRect = homeNameText.getBoundingClientRect();
+      const startFontSize = window.getComputedStyle(homeName).fontSize;
+
+      // We need to measure the End position (Resume Name).
+      // Problem: Resume view is display:none. 
+      // Fix: Make it block but invisible, measure, then hide original name.
+      resumeView.style.display = 'block';
+      resumeView.style.opacity = '1'; 
+      resumeName.style.visibility = 'hidden'; // Don't show the real one yet
+      
+      const endRect = resumeNameText.getBoundingClientRect();
+      const endFontSize = window.getComputedStyle(resumeName).fontSize;
+
+      // Hide Home View now that we have measurements
+      homeView.style.display = 'none';
+
+      // 3. Create and Animate Ghost
+      createAndAnimateGhost(startRect, endRect, startFontSize, endFontSize, 'Matt Hallowell', async () => {
+        // This callback runs after animation completes:
+        resumeName.style.visibility = 'visible';
+        
+        // 4. Traffic Jam In
+        const blocks = document.querySelectorAll('.resume-block');
+        for (let i = 0; i < blocks.length; i++) {
+          blocks[i].classList.add('arrived');
+          await wait(100); // Stagger delay
+        }
+      });
+    }
+
+    async function goToHome() {
+      // 1. Reverse Traffic Jam (Fade out resume blocks)
+      const blocks = Array.from(document.querySelectorAll('.resume-block'));
+      
+      // Loop backwards or forwards? Usually backwards looks cool for exit, 
+      // or forwards for "draining". Let's do reverse index for "peeling off".
+      for (let i = blocks.length - 1; i >= 0; i--) {
+        blocks[i].classList.remove('arrived');
+        await wait(50); // Faster stagger for exit
       }
+      
+      // Wait for the last block css transition to roughly finish
+      await wait(400);
 
+      // 2. Prepare Transition
+      const startRect = resumeNameText.getBoundingClientRect();
+      const startFontSize = window.getComputedStyle(resumeName).fontSize;
+
+      // Enable Home View to measure
+      homeView.style.display = 'flex';
+      homeName.style.visibility = 'hidden'; // Hide real target
+      resumeView.style.display = 'none'; // Hide resume view
+
+      const endRect = homeNameText.getBoundingClientRect();
+      const endFontSize = window.getComputedStyle(homeName).fontSize;
+
+      // 3. Create and Animate Ghost
+      createAndAnimateGhost(startRect, endRect, startFontSize, endFontSize, 'Matt Hallowell', () => {
+        // After animation:
+        homeName.style.visibility = 'visible';
+        homeContent.classList.add('visible');
+      });
+    }
+
+    function createAndAnimateGhost(startRect, endRect, startSize, endSize, text, onComplete) {
+      const ghost = document.createElement('div');
+      ghost.textContent = text;
+      ghost.className = 'flying-ghost';
+      
+      // Set initial state
+      ghost.style.top = `${startRect.top}px`;
+      ghost.style.left = `${startRect.left}px`;
+      ghost.style.fontSize = startSize;
+      
+      document.body.appendChild(ghost);
+
+      // Force Reflow (browser needs to realize the element is there before we change CSS)
+      ghost.getBoundingClientRect();
+
+      // Calculate translation and scale
+      const dX = endRect.left - startRect.left;
+      const dY = endRect.top - startRect.top;
+      
+      // Parse font sizes to numbers for scaling
+      const sSizeVal = parseFloat(startSize);
+      const eSizeVal = parseFloat(endSize);
+      const scale = eSizeVal / sSizeVal;
+
+      // Apply transformation
+      ghost.style.transform = `translate(${dX}px, ${dY}px) scale(${scale})`;
+
+      // Cleanup after transition duration (0.7s in CSS)
       setTimeout(() => {
-        // Create ghost at fromEl
-        const startRect = fromEl.getBoundingClientRect();
-        const ghost = document.createElement('h1');
-        ghost.textContent = fromEl.textContent;
-        ghost.className = 'flying-ghost';
-        ghost.style.top = startRect.top + 'px';
-        ghost.style.left = startRect.left + 'px';
-        ghost.style.fontSize = window.getComputedStyle(fromEl).fontSize;
-        document.body.appendChild(ghost);
-
-        // Hide real names
-        fromEl.style.visibility = 'hidden';
-        toEl.style.visibility = 'hidden';
-
-        // Make destination visible for layout but transparent
-        toView.style.opacity = 0;
-        toView.style.pointerEvents = 'none';
-        toView.style.display = 'block';
-
-        // Measure end position
-        const endRect = toEl.getBoundingClientRect();
-        const dx = endRect.left - startRect.left;
-        const dy = endRect.top - startRect.top;
-
-        requestAnimationFrame(() => {
-          ghost.style.transform = `translate(${dx}px,${dy}px)`;
-          ghost.style.fontSize = window.getComputedStyle(toEl).fontSize;
-        });
-
-        setTimeout(() => {
-          ghost.remove();
-          toEl.style.visibility = '';
-          toView.style.opacity = 1;
-          toView.style.pointerEvents = 'auto';
-
-          // Fade in content
-          if (goingToResume) {
-            resumeBlocks.forEach((b, i) => {
-              setTimeout(() => b.classList.add('arrived'), i * 100);
-            });
-          } else {
-            homeContent.classList.add('visible');
-          }
-        }, 700);
-
-      }, 400); // wait for content fade out
+        ghost.remove();
+        if (onComplete) onComplete();
+      }, 700);
     }
   </script>
 </body>
-
 </html>
