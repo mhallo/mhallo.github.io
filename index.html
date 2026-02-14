@@ -11,6 +11,7 @@
       --fg: #e6e6eb;
       --accent: #7aa2f7;
       --muted: #a9b1d6;
+      --hover-bg: rgba(122, 162, 247, 0.1);
     }
 
     body {
@@ -43,7 +44,6 @@
       justify-content: center;
       min-height: 100vh;
       padding: 4rem 2rem;
-      /* Absolute positioning ensures it doesn't push resume down initially */
       position: absolute;
       top: 0;
       left: 0;
@@ -69,7 +69,13 @@
       color: var(--fg);
     }
 
-    /* Resume Name Tweaks */
+    /* Home Name - Initial State for Animation */
+    #home-name {
+      opacity: 0;
+      /* Starts hidden */
+      transition: opacity 1s ease;
+    }
+
     #resume-name {
       font-size: 2.2rem;
       transform-origin: top left;
@@ -104,7 +110,7 @@
       font-weight: 600;
     }
 
-    /* HOME CONTENT STYLES */
+    /* HOME SPECIFIC */
     .current {
       font-size: 1.05rem;
       color: var(--fg);
@@ -119,6 +125,41 @@
       border: 0;
       border-top: 1px solid rgba(255, 255, 255, 0.1);
       margin: 2rem 0;
+    }
+
+    /* SOCIAL BUTTONS */
+    .social-row {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      justify-content: flex-start;
+    }
+
+    .social-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--muted);
+      transition: all 0.2s ease;
+      border: 1px solid transparent;
+    }
+
+    .social-btn svg {
+      width: 20px;
+      height: 20px;
+      fill: currentColor;
+    }
+
+    .social-btn:hover {
+      background: var(--hover-bg);
+      color: var(--accent);
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      text-decoration: none;
     }
 
     /* RESUME SPECIFIC STYLES */
@@ -154,24 +195,27 @@
       margin-bottom: 0.4rem;
     }
 
-    /* FADE UTILITIES */
+    /* ANIMATION UTILITIES */
+
+    /* Wrapper handles the "Whole page fades out" when leaving */
     .fade-wrapper {
-      opacity: 0;
       transition: opacity 0.4s ease;
     }
 
-    .fade-wrapper.visible {
-      opacity: 1;
+    .fade-wrapper.hidden {
+      opacity: 0;
     }
 
-    /* RESUME BLOCKS (Traffic Jam) */
+    /* Blocks handle the "Traffic Jam" sliding up */
+    .home-block,
     .resume-block {
       opacity: 0;
-      transform: translateY(30px);
-      transition: opacity 0.4s ease, transform 0.4s ease;
-      margin-top: 2.5rem;
+      transform: translateY(20px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
     }
 
+    /* When the block has 'arrived' */
+    .home-block.visible,
     .resume-block.arrived {
       opacity: 1;
       transform: translateY(0);
@@ -217,7 +261,7 @@
       }
     }
 
-    /* Responsive adjustments */
+    /* Responsive */
     @media (max-width: 600px) {
       .location {
         float: none;
@@ -240,48 +284,77 @@
     <main id="home-view">
       <h1 id="home-name"><span class="text-content">Matt Hallowell</span><span class="cursor"></span></h1>
 
-      <div id="home-content" class="fade-wrapper visible">
+      <div id="home-content" class="fade-wrapper">
 
-        <p class="current">
-          With over <span id="exp">6</span> years of experience in distributed systems,
-          I design and scale high-performance architectures — focusing on
-          vectorized data processing, real-time systems, and applied AI.
-        </p>
+        <!-- Social Buttons -->
+        <div class="home-block social-row">
+          <a href="https://github.com/mhallo" target="_blank" class="social-btn" aria-label="GitHub">
+            <svg viewBox="0 0 24 24">
+              <path
+                d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+            </svg>
+          </a>
+          <a href="https://linkedin.com/in/mhallo" target="_blank" class="social-btn" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24">
+              <path
+                d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+            </svg>
+          </a>
+          <a href="mailto:hello@gt3.dev" class="social-btn" aria-label="Email">
+            <svg viewBox="0 0 24 24">
+              <path
+                d="M0 3v18h24v-18h-24zm6.623 7.929l-4.623 5.712v-11.174l4.623 5.462zm5.377 2.738l-5.364-6.338 11.364-.001-5.364 6.339zm5.377-2.738l4.623-5.462v11.175l-4.623-5.713zm-11.024 1.327l-4.353 5.376h20.002l-4.353-5.376-5.647 6.671-5.649-6.671z" />
+            </svg>
+          </a>
+        </div>
 
-        <p class="current">
-          Most recently, I re-architected a legacy monolith into a distributed
-          Polars & Dagster pipeline — processing <strong>40M+</strong> daily records
-          and reducing ETL runtime by
-          <strong>97% <span style="white-space: nowrap;">(5.5h → 16m)</span></strong>.
-        </p>
+        <div class="home-block">
+          <p class="current">
+            With over <span id="exp">6</span> years of experience in distributed systems,
+            I design and scale high-performance architectures — focusing on
+            vectorized data processing, real-time systems, and applied AI.
+          </p>
+        </div>
 
-        <p class="current">
-          I'm currently architecting a Model Context Protocol server to enable agentic workflows and optimizing RAG
-          pipelines.
-        </p>
+        <div class="home-block">
+          <p class="current">
+            Most recently, I re-architected a legacy monolith into a distributed
+            Polars & Dagster pipeline — processing <strong>40M+</strong> daily records
+            and reducing ETL runtime by
+            <strong>97% <span style="white-space: nowrap;">(5.5h → 16m)</span></strong>.
+          </p>
+        </div>
 
-        <hr class="divider" />
+        <div class="home-block">
+          <p class="current">
+            I'm currently architecting a Model Context Protocol server to enable agentic workflows and optimizing RAG
+            pipelines.
+          </p>
+        </div>
 
-        <p class="previous">
-          Previously, I engineered <a href="https://www.zoom.us" target="_blank" rel="noopener">Zoom</a> for <a
-            href="https://www.zoomgov.com" target="_blank" rel="noopener">Government</a> infrastructure
-          (FedRAMP/IL4) to support federal agencies.
-        </p>
+        <div class="home-block">
+          <hr class="divider" />
+        </div>
 
-        <p class="previous">
-          Before that, I developed low-latency voice processing
-          systems and DSP encryption in C++ at <a href="https://www.motorolasolutions.com" target="_blank"
-            rel="noopener">Motorola</a> for mission-critical 911 dispatch communications.
-        </p>
+        <div class="home-block">
+          <p class="previous">
+            Previously, I engineered <a href="https://www.zoom.us" target="_blank" rel="noopener">Zoom</a> for <a
+              href="https://www.zoomgov.com" target="_blank" rel="noopener">Government</a> infrastructure
+            (FedRAMP/IL4) to support federal agencies.
+          </p>
+        </div>
 
-        <p class="previous" style="margin-top: 2rem;">
-          For professional inquiries: <a href="mailto:hello@gt3.dev">hello@gt3.dev</a>
-        </p>
+        <div class="home-block">
+          <p class="previous">
+            Before that, I developed low-latency voice processing
+            systems and DSP encryption in C++ at <a href="https://www.motorolasolutions.com" target="_blank"
+              rel="noopener">Motorola</a> for mission-critical 911 dispatch communications.
+          </p>
+        </div>
 
-        <!-- The Trigger -->
-        <p style="margin-top: 2rem; font-size: 1.1rem;">
+        <div class="home-block" style="margin-top: 2rem; font-size: 1.1rem;">
           <a onclick="goToResume()">View Full Resume →</a>
-        </p>
+        </div>
 
       </div>
     </main>
@@ -335,7 +408,7 @@
           <span class="role-title">Software Engineer II</span>
           <span class="role-date">November 2019 – May 2022</span>
         </div>
-        <div class="role-row" style="margin-top:-0.5rem">
+        <div class="role-row" style="margin-top:-0.5rem; opacity:0.8">
           <span class="role-title">Software Engineer I</span>
           <span class="role-date">July 2018 – November 2019</span>
         </div>
@@ -397,13 +470,12 @@
   </div>
 
   <script>
-    // Calculate Years of Experience automatically
+    // Calculate Years of Experience
     const startYear = 2018;
     const currentYear = new Date().getFullYear();
     const expSpan = document.getElementById('exp');
     if (expSpan) expSpan.innerText = currentYear - startYear;
 
-    // Utility for cleaner async/await delays
     const wait = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
     const homeView = document.getElementById('home-view');
@@ -412,20 +484,34 @@
     const resumeName = document.getElementById('resume-name');
     const homeContent = document.getElementById('home-content');
 
-    // Select the actual text spans, ignoring the cursor
     const homeNameText = homeName.querySelector('.text-content');
     const resumeNameText = resumeName.querySelector('.text-content');
+
+    // INITIAL LOAD ANIMATION
+    window.addEventListener('load', async () => {
+      // 1. Fade Name In
+      homeName.style.opacity = 1;
+
+      // Wait a bit before content starts arriving
+      await wait(600);
+
+      // 2. Traffic Jam the Home Blocks in
+      const homeBlocks = document.querySelectorAll('.home-block');
+      for (let i = 0; i < homeBlocks.length; i++) {
+        homeBlocks[i].classList.add('visible');
+        await wait(100);
+      }
+    });
 
     async function goToResume() {
       window.scrollTo({ top: 0, behavior: 'smooth' });
 
-      // 1. Fade out home content
-      homeContent.classList.remove('visible');
+      // 1. Fade out the wrapper of home content
+      homeContent.classList.add('hidden');
 
-      // Wait for fade out to finish
       await wait(400);
 
-      // 2. Prepare the Transition
+      // 2. Prepare Transition
       const startRect = homeNameText.getBoundingClientRect();
       const startFontSize = window.getComputedStyle(homeName).fontSize;
 
@@ -436,14 +522,16 @@
       const endRect = resumeNameText.getBoundingClientRect();
       const endFontSize = window.getComputedStyle(resumeName).fontSize;
 
-      // Hide Home View
       homeView.style.display = 'none';
 
-      // 3. Create and Animate Ghost
+      // RESET HOME: Remove 'visible' from blocks so they can re-animate later
+      document.querySelectorAll('.home-block').forEach(b => b.classList.remove('visible'));
+
+      // 3. Ghost Animation
       createAndAnimateGhost(startRect, endRect, startFontSize, endFontSize, 'Matt Hallowell', async () => {
         resumeName.style.visibility = 'visible';
 
-        // 4. Traffic Jam In
+        // 4. Traffic Jam Resume Blocks
         const blocks = document.querySelectorAll('.resume-block');
         for (let i = 0; i < blocks.length; i++) {
           blocks[i].classList.add('arrived');
@@ -455,9 +543,8 @@
     async function goToHome() {
       window.scrollTo({ top: 0, behavior: 'smooth' });
 
-      // 1. Reverse Traffic Jam (Fade out resume blocks)
+      // 1. Exit Resume (Reverse Traffic Jam)
       const blocks = Array.from(document.querySelectorAll('.resume-block'));
-
       for (let i = blocks.length - 1; i >= 0; i--) {
         blocks[i].classList.remove('arrived');
         await wait(50);
@@ -471,15 +558,24 @@
 
       homeView.style.display = 'flex';
       homeName.style.visibility = 'hidden';
+      // Ensure wrapper is visible, but individual blocks are hidden (removed 'visible' class in previous function)
+      homeContent.classList.remove('hidden');
+
       resumeView.style.display = 'none';
 
       const endRect = homeNameText.getBoundingClientRect();
       const endFontSize = window.getComputedStyle(homeName).fontSize;
 
-      // 3. Create and Animate Ghost
-      createAndAnimateGhost(startRect, endRect, startFontSize, endFontSize, 'Matt Hallowell', () => {
+      // 3. Ghost Animation
+      createAndAnimateGhost(startRect, endRect, startFontSize, endFontSize, 'Matt Hallowell', async () => {
         homeName.style.visibility = 'visible';
-        homeContent.classList.add('visible');
+
+        // 4. Traffic Jam Home Blocks (Re-Entry)
+        const homeBlocks = document.querySelectorAll('.home-block');
+        for (let i = 0; i < homeBlocks.length; i++) {
+          homeBlocks[i].classList.add('visible');
+          await wait(100);
+        }
       });
     }
 
