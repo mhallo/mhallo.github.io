@@ -21,6 +21,16 @@
       color: var(--fg);
       line-height: 1.6;
       overflow-x: hidden;
+      /* Always hide horizontal scroll */
+    }
+
+    /* 
+       State Class: home-active 
+       This locks the viewport so no scrollbar appears on the main screen 
+    */
+    body.home-active {
+      overflow: hidden;
+      height: 100vh;
     }
 
     #container {
@@ -43,7 +53,8 @@
       flex-direction: column;
       justify-content: center;
       min-height: 100vh;
-      padding: 4rem 2rem;
+      padding: 2rem;
+      /* Reduced padding slightly to ensure fit on smaller laptops */
       position: absolute;
       top: 0;
       left: 0;
@@ -458,7 +469,7 @@
           <span class="role-title">Software Engineer II</span>
           <span class="role-date">November 2019 – May 2022</span>
         </div>
-        <div class="role-row" style="margin-top:-0.5rem">
+        <div class="role-row" style="margin-top:-0.5rem; opacity:0.8">
           <span class="role-title">Software Engineer I</span>
           <span class="role-date">July 2018 – November 2019</span>
         </div>
@@ -545,6 +556,9 @@
 
     // INITIAL LOAD ANIMATION
     window.addEventListener('load', async () => {
+      // Add home-active class immediately to lock scroll
+      document.body.classList.add('home-active');
+
       // 1. Fade Name In
       homeName.style.opacity = 1;
 
@@ -560,6 +574,9 @@
     });
 
     async function goToResume() {
+      // Remove class to allow scrolling on resume
+      document.body.classList.remove('home-active');
+
       window.scrollTo({ top: 0, behavior: 'smooth' });
 
       // 1. Fade out the wrapper of home content
@@ -597,6 +614,7 @@
     }
 
     async function goToHome() {
+      // Scroll to top first to ensure transition looks right
       window.scrollTo({ top: 0, behavior: 'smooth' });
 
       // 1. Exit Resume (Reverse Traffic Jam)
@@ -607,6 +625,9 @@
       }
 
       await wait(400);
+
+      // Add class back to lock scroll on home
+      document.body.classList.add('home-active');
 
       // 2. Prepare Transition
       const startRect = resumeNameText.getBoundingClientRect();
