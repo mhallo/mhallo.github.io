@@ -26,7 +26,8 @@
 
     /* 
        State Class: home-active 
-       This locks the viewport so no scrollbar appears on the main screen 
+       On Desktop: Locks viewport.
+       On Mobile: We override this in the media query below.
     */
     body.home-active {
       overflow: hidden;
@@ -54,7 +55,6 @@
       justify-content: center;
       min-height: 100vh;
       padding: 2rem;
-      /* Reduced padding slightly to ensure fit on smaller laptops */
       position: absolute;
       top: 0;
       left: 0;
@@ -316,8 +316,41 @@
       }
     }
 
-    /* Responsive */
-    @media (max-width: 600px) {
+    /* =========================================
+       RESPONSIVE ADJUSTMENTS (FIX FOR MOBILE) 
+       ========================================= */
+    @media (max-width: 768px),
+    (max-height: 800px) {
+
+      /* 1. Unlock the scroll on mobile, even if 'home-active' is on */
+      body.home-active {
+        overflow-y: auto !important;
+        /* Allow vertical scroll */
+        height: auto !important;
+      }
+
+      /* 2. Adjust Home View to not be absolute centered */
+      #home-view {
+        position: relative;
+        /* Flow naturally */
+        min-height: 100vh;
+        height: auto;
+        padding-top: 5rem;
+        padding-bottom: 5rem;
+        justify-content: flex-start;
+        /* Start from top */
+      }
+
+      /* 3. Scale down fonts slightly */
+      h1 {
+        font-size: 2.2rem;
+      }
+
+      #resume-name {
+        font-size: 2rem;
+      }
+
+      /* 4. Layout tweaks */
       .location {
         float: none;
         display: block;
