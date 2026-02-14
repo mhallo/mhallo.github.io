@@ -162,6 +162,50 @@
       text-decoration: none;
     }
 
+    /* ELEGANT ACTION BUTTONS */
+    .action-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.8rem 1.5rem;
+      background: rgba(122, 162, 247, 0.08);
+      border: 1px solid rgba(122, 162, 247, 0.15);
+      border-radius: 12px;
+      color: var(--accent);
+      font-weight: 500;
+      font-size: 1rem;
+      text-decoration: none;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      cursor: pointer;
+    }
+
+    .action-btn svg {
+      width: 1.2em;
+      height: 1.2em;
+      fill: currentColor;
+      transition: transform 0.3s ease;
+    }
+
+    .action-btn:hover {
+      background: rgba(122, 162, 247, 0.15);
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 20px rgba(122, 162, 247, 0.15);
+      text-decoration: none;
+      color: #fff;
+    }
+
+    /* Move arrow right on hover */
+    .action-btn:not(.back-btn):hover svg {
+      transform: translateX(4px);
+    }
+
+    /* Move arrow left on hover for back button */
+    .action-btn.back-btn:hover svg {
+      transform: translateX(-4px);
+    }
+
+
     /* RESUME SPECIFIC STYLES */
     .location {
       float: right;
@@ -352,8 +396,14 @@
           </p>
         </div>
 
-        <div class="home-block" style="margin-top: 2rem; font-size: 1.1rem;">
-          <a onclick="goToResume()">View Full Resume →</a>
+        <div class="home-block" style="margin-top: 3rem;">
+          <a onclick="goToResume()" class="action-btn">
+            <span>View Full Resume</span>
+            <svg viewBox="0 0 24 24">
+              <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg>
+          </a>
         </div>
 
       </div>
@@ -408,7 +458,7 @@
           <span class="role-title">Software Engineer II</span>
           <span class="role-date">November 2019 – May 2022</span>
         </div>
-        <div class="role-row" style="margin-top:-0.5rem; opacity:0.8">
+        <div class="role-row" style="margin-top:-0.5rem">
           <span class="role-title">Software Engineer I</span>
           <span class="role-date">July 2018 – November 2019</span>
         </div>
@@ -461,9 +511,15 @@
         </p>
       </div>
 
-      <!-- Back Button -->
+      <!-- Bottom Back Button -->
       <div class="resume-block" style="margin-top: 4rem; margin-bottom: 2rem;">
-        <a onclick="goToHome()">← Back Home</a>
+        <a onclick="goToHome()" class="action-btn back-btn">
+          <svg viewBox="0 0 24 24">
+            <path d="M19 12H5M12 19l-7-7 7-7" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg>
+          <span>Back Home</span>
+        </a>
       </div>
     </div>
 
