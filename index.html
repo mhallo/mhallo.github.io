@@ -431,8 +431,8 @@
 
         <div class="home-block">
           <p class="current">
-            I'm currently architecting a Model Context Protocol server to enable agentic workflows and optimizing RAG
-            pipelines.
+            I recently architected a company-wide MCP server enabling plain-English search across product data —
+            achieving <strong>45%</strong> prompt-to-pageview conversion in its first week, greenlit for public release.
           </p>
         </div>
 
@@ -478,37 +478,33 @@
           <span class="role-title">Senior Software Engineer II</span>
           <span class="role-date">March 2026 - Present</span>
         </div>
-        <div class="role-row" style="margin-top:-0.5rem; opacity:0.8">
+        <ul>
+          <li>Led a cross-functional team of 5, mentoring 2 junior engineers through technical design reviews and end-to-end feature ownership.</li>
+          <li>Architected a company-wide MCP server enabling plain-English search across product data structures; achieved 45% prompt-to-pageview conversion (27/60 searches) in first week, greenlit for public release.</li>
+          <li>Building a Nuxt-based internal developer platform spanning Engineering, Data, Product, Sales, and Operations as a unified hub for tooling across a 48-person org.</li>
+        </ul>
+        <div class="role-row" style="margin-top:0.8rem; opacity:0.8">
           <span class="role-title">Senior Software Engineer</span>
           <span class="role-date">August 2024 - March 2026</span>
         </div>
         <ul>
-          <li>Designed and led migration from PHP monolith to distributed Python/Dagster platform, executing
-            zero-downtime cutover via traffic-mirroring shadow tests on EKS to validate 40M+ daily records.</li>
-          <li>Redesigned ETL logic using Polars and distributed EKS fan-out jobs, replacing brittle heuristics to cut
-            runtime by 97% (5.5h → 16m) and reducing infrastructure costs by 40%.</li>
-          <li>Architected a Model Context Protocol (MCP) server to standardize real-time context retrieval for internal
-            LLM agents, enabling RAG workflows that increased recommendation outclicks by 24%.</li>
-          <li>Modernized DevEx by implementing a uv-based Python monorepo and automated ArgoCD pipelines, optimizing
-            GitHub Actions for faster smoke testing and deployment velocity (10m → 2m).</li>
+          <li>Led migration from a PHP monolith to a distributed processing platform using Python and Dagster, executing zero-downtime cutover via EKS traffic-mirroring to validate 40M+ daily records.</li>
+          <li>Scaled data ingestion platform to 26 merchants across Amazon, Walmart, Best Buy, eBay, and others — with eBay onboarding currently in progress.</li>
+          <li>Optimized parallelized execution using Polars and EKS fan-out jobs, cutting runtime by 97% (5.5h → 16m) and infrastructure costs by 40%.</li>
+          <li>Modernized the developer platform with a uv-based Python monorepo and ArgoCD pipelines, reducing deployment time 80% (10m → 2m).</li>
         </ul>
       </div>
 
       <div class="resume-block">
         <h3>Zoom Video Communications <span class="location">Seattle, WA</span></h3>
         <div class="role-row">
-          <span class="role-title">Software Engineer - Infrastructure</span>
+          <span class="role-title">Software Engineer – Systems & Infrastructure</span>
           <span class="role-date">May 2022 – August 2024</span>
         </div>
         <ul>
-          <li>Engineered backend systems for Zoom for Government, enabling IL4/FedRAMP-compliant video/chat services for
-            federal agencies and contributing to $10M+ in contract wins.</li>
-          <li>Developed a custom CVE scanner in Go and GitLab CI, automating vulnerability triage and saving 30+
-            engineer hours per month.</li>
-          <li>Architected a Go-based Prometheus alerting service for GitOps/PagerDuty integration, streamlining on-call
-            workflows and incident response.</li>
-          <li>Developed reusable Terraform modules to automate AWS infrastructure provisioning, reducing manual
-            configuration errors across Kubernetes clusters.</li>
+          <li>Engineered distributed backend systems for Zoom for Government serving millions of concurrent users, enabling IL4/FedRAMP authorization and securing $10M+ in federal contract wins.</li>
+          <li>Built a Go service automating targeted ECR vulnerability scanning across 30+ repositories, reducing scan time by 94% (3hrs → 10min) via precise per-SHA triggers on image sync.</li>
+          <li>Owned on-call incident response for distributed government infrastructure, resolving service failures, Nginx misconfigurations, and SQL incidents on FedRAMP-authorized systems.</li>
         </ul>
       </div>
 
@@ -523,14 +519,9 @@
           <span class="role-date">July 2018 – November 2019</span>
         </div>
         <ul>
-          <li>Built and optimized a Node.js REST API for real-time connection management, implementing deterministic
-            routing to eliminate lookup overhead, cutting worst case latency by 87% (2.3s → 0.3s).</li>
-          <li>Developed digital signal processing modules in C++ for encrypted voice transmission and containerized
-            audio processing for safety-critical 911 dispatch systems.</li>
-          <li>Implemented load testing frameworks to validate system resilience under 1,600 concurrent radio calls,
-            identifying and resolving critical performance bottlenecks.</li>
-          <li>Migrated messaging infrastructure from Kafka to Redis Pub/Sub, reducing latency for real-time delivery in
-            a high-throughput environment.</li>
+          <li>Developed and extended C++ audio processing software for a 24/7 live 911 dispatch platform — spanning SIP/FreeSWITCH signaling, multicast packet handling, DSP modules, and containerized audio pipelines across cell phones, field radios, and encrypted tactical channels.</li>
+          <li>Built a Node.js REST API for real-time dispatch connection management, eliminating cascading pod redirects via a shared hash-based routing scheme — cutting call establishment latency by 87% (2.3s → 0.3s).</li>
+          <li>Migrated dispatch messaging from Kafka to Redis Pub/Sub, using idempotent multi-publish to prioritize speed without sacrificing delivery reliability.</li>
         </ul>
       </div>
 
@@ -550,11 +541,10 @@
           style="margin-bottom:0.5rem; text-transform: uppercase; letter-spacing: 1px; font-size: 0.9rem; color: var(--accent);">
           Technical Skills</h3>
         <p style="font-size: 0.95rem;">
-          <strong>Languages:</strong> Python, Java, JavaScript, C++, Go<br>
-          <strong>Cloud:</strong> AWS (EKS, S3, RDS, ElastiCache, MSK, IAM, Route 53), Kubernetes, Terraform<br>
-          <strong>DevOps:</strong> GitHub Actions, GitLab CI, Docker, Helm, env0<br>
-          <strong>Data/Infra:</strong> Dagster, Kafka, Redis, Prometheus, Postgres, MySQL, OpenShift, RAG/LLM
-          Engineering
+          <strong>Languages:</strong> Python, Go, JavaScript, C++, Java<br>
+          <strong>AI / Data:</strong> RAG/LLM Engineering, MCP, Dagster, Polars, Kafka, Redis, Prometheus, Postgres, MySQL<br>
+          <strong>Distributed Systems & Cloud:</strong> AWS (EKS, S3, RDS, ElastiCache, MSK, IAM, Route 53), Kubernetes, Terraform<br>
+          <strong>Platform & Tooling:</strong> GitHub Actions, GitLab CI, Docker, Helm, ArgoCD, env0
         </p>
       </div>
 
@@ -564,7 +554,7 @@
           Awards & Interests</h3>
         <p style="font-size: 0.95rem;">
           <strong>Eagle Scout</strong>, Boy Scouts of America (May 2013)<br>
-          Backpacking, Guitar, Hiking, Cycling, Cross Country Skiing, Car Enthusiast
+          Backpacking, Guitar, Hiking, Cycling, Cross Country Skiing, Formula 1, Car Enthusiast
         </p>
       </div>
 
