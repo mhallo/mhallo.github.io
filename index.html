@@ -1128,7 +1128,7 @@
           <div>
             <div class="s-head">
               <span class="s-org">Slickdeals</span>
-              <span class="s-loc">San Francisco, CA</span>
+              <span class="s-loc">San Mateo, CA</span>
             </div>
             <div class="s-role"><span>Senior Software Engineer II</span><span class="when">2026.03 — PRESENT</span>
             </div>
@@ -1323,6 +1323,7 @@
       const LAP_MS = 60000;
       let lap = 1, lapStart = performance.now();
       const fmtLap = ms => {
+        if (ms < 0) ms = 0; // never render a negative time
         const m = Math.floor(ms / 60000);
         const s = Math.floor(ms % 60000 / 1000);
         const ml = Math.floor(ms % 1000);
@@ -1333,16 +1334,18 @@
         // motion-sensitive: seconds only, steady 1s cadence
         const slow = () => {
           let el = performance.now() - lapStart;
+          if (el < 0) { lapStart = performance.now(); el = 0; } // self-heal if the clock goes weird
           if (el >= LAP_MS) { lapStart = performance.now(); el = 0; rollLap(); }
           lapTime.textContent = fmtLap(el).slice(0, -3) + "000";
         };
         slow();
         setInterval(slow, 1000);
       } else {
-        let last = 0, hideAt = 0, started = false;
+        let last = 0, started = false, pausedEl = -1;
         const loop = now => {
           if (!started) { lapStart = now; started = true; } // start at 0 on first visible frame
           let el = now - lapStart;
+          if (el < 0) { lapStart = now; el = 0; } // self-heal if visibility/clock math goes weird
           if (el >= LAP_MS) { lapStart = now; el = 0; rollLap(); }
           if (now - last >= 32) { lapTime.textContent = fmtLap(el); last = now; }
           if (trk && trk.inView && trk.L) {
@@ -1354,10 +1357,10 @@
           requestAnimationFrame(loop);
         };
         requestAnimationFrame(loop);
-        // freeze elapsed across tab-hidden so the lap doesn't jump
+        // pause elapsed time while hidden, then resume where we left off — never jump or go negative
         document.addEventListener("visibilitychange", () => {
-          if (document.hidden) hideAt = performance.now();
-          else if (hideAt) { lapStart += performance.now() - hideAt; hideAt = 0; }
+          if (document.hidden) pausedEl = Math.max(0, performance.now() - lapStart);
+          else if (pausedEl >= 0) { lapStart = performance.now() - pausedEl; pausedEl = -1; }
         });
       }
 
