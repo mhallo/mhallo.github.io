@@ -215,9 +215,9 @@
       transition: color 0.3s ease, opacity 0.25s ease, transform 0.25s ease;
     }
 
-    /* dots-only by default — keep the active "you are here" label,
-       reveal the others only while hovering the rail */
-    .rail-tick.on .lbl,
+    /* dots-only by default. The active label "peeks" briefly when you scroll into a
+       sector (then tucks away), and any label appears while hovering the rail. */
+    .rail-tick .lbl.peek,
     #rail:hover .rail-tick .lbl {
       opacity: 1;
       transform: translate(0, -50%);
@@ -970,6 +970,18 @@
       #comms {
         padding: 56px 0;
       }
+
+      /* keep the driver-file line from overflowing on phones */
+      .hero-meta {
+        flex-wrap: wrap;
+        gap: 6px 12px;
+        font-size: 11px;
+        letter-spacing: 0.12em;
+      }
+
+      .hero-meta .hide-sm {
+        display: none;
+      }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -1381,6 +1393,16 @@
         void seg.offsetWidth; // restart the flash
         seg.classList.add(cls, "flash");
       }
+      // briefly reveal a sector's label when you arrive, so it doesn't sit and overlap content
+      let peekTimer;
+      function peekLabel(idx) {
+        ticks.forEach(t => t.querySelector(".lbl").classList.remove("peek"));
+        const lbl = ticks[idx] && ticks[idx].querySelector(".lbl");
+        if (!lbl) return;
+        lbl.classList.add("peek");
+        clearTimeout(peekTimer);
+        peekTimer = setTimeout(() => lbl.classList.remove("peek"), 1300);
+      }
       function onScroll() {
         const doc = document.documentElement;
         const mid = doc.scrollTop + window.innerHeight * 0.4;
@@ -1394,6 +1416,7 @@
           if (active > lastActive) for (let i = lastActive; i < active; i++) gradeSector(i, now - sectorEnter);
           lastActive = active;
           sectorEnter = now; // start timing the sector just entered
+          peekLabel(active); // flash the new sector's label, then hide it
         }
         ticks.forEach((t, i) => t.classList.toggle("on", i === active));
         scrollTick = false;
@@ -1403,6 +1426,7 @@
         if (!scrollTick) { requestAnimationFrame(onScroll); scrollTick = true; }
       }, { passive: true });
       onScroll();
+      peekLabel(0); // flash the current sector label on load, then tuck it away
 
       // ---- hero circuit + car, synced to the lap timer ----
       const cBase = $("#trk-base"), cProg = $("#trk-prog"), cCar = $("#car"), cSvg = $("#circuit");
