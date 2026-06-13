@@ -26,7 +26,10 @@
       --muted: #8a909b;
       --dim: #565c67;
       --red: #ff3b34;
+      --papaya: #ff8000;
       --green: #5ef38c;
+      --purple: #b14bff;
+      --yellow: #ffd23f;
       --amber: #ffc24b;
       --sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
       --mono: ui-monospace, "SF Mono", "JetBrains Mono", "Menlo", "Consolas", monospace;
@@ -116,15 +119,44 @@
       background: var(--line);
     }
 
-    #rail-fill {
+    /* F1-style sector timing segments */
+    .rail-seg {
       position: absolute;
-      top: 0;
-      left: -0.5px;
+      left: 50%;
+      transform: translateX(-50%);
       width: 3px;
-      height: 0%;
-      background: var(--red);
-      box-shadow: 0 0 10px rgba(255, 59, 52, 0.7);
-      transition: height 0.1s linear;
+      background: transparent;
+      border-radius: 2px;
+      transition: background 0.45s ease, box-shadow 0.45s ease;
+    }
+
+    .rail-seg.purple {
+      background: var(--purple);
+      box-shadow: 0 0 11px var(--purple);
+    }
+
+    .rail-seg.green {
+      background: var(--green);
+      box-shadow: 0 0 11px var(--green);
+    }
+
+    .rail-seg.yellow {
+      background: var(--yellow);
+      box-shadow: 0 0 9px var(--yellow);
+    }
+
+    .rail-seg.flash {
+      animation: segFlash 0.55s ease;
+    }
+
+    @keyframes segFlash {
+      0% {
+        filter: brightness(2.4);
+      }
+
+      100% {
+        filter: brightness(1);
+      }
     }
 
     .rail-tick {
@@ -172,13 +204,23 @@
       position: absolute;
       left: 16px;
       top: 50%;
-      transform: translateY(-50%);
+      transform: translate(-6px, -50%);
       font-family: var(--mono);
       font-size: 9px;
       letter-spacing: 0.12em;
       color: var(--dim);
       white-space: nowrap;
-      transition: color 0.3s ease;
+      opacity: 0;
+      pointer-events: none;
+      transition: color 0.3s ease, opacity 0.25s ease, transform 0.25s ease;
+    }
+
+    /* dots-only by default — keep the active "you are here" label,
+       reveal the others only while hovering the rail */
+    .rail-tick.on .lbl,
+    #rail:hover .rail-tick .lbl {
+      opacity: 1;
+      transform: translate(0, -50%);
     }
 
     .rail-tick.on .lbl {
@@ -337,10 +379,10 @@
 
     #trk-prog {
       fill: none;
-      stroke: var(--red);
+      stroke: var(--papaya);
       stroke-width: 2.6;
       stroke-linecap: round;
-      opacity: 0.78;
+      opacity: 0.85;
     }
 
     #trk-sf {
@@ -349,8 +391,8 @@
     }
 
     #car .halo {
-      fill: var(--red);
-      opacity: 0.55;
+      fill: var(--papaya);
+      opacity: 0.6;
     }
 
     #car .core {
@@ -423,6 +465,12 @@
     .hero-sub strong {
       color: var(--fg);
       font-weight: 600;
+    }
+
+    .hero-sub .motto {
+      display: block;
+      margin-top: 0.7em;
+      color: var(--fg);
     }
 
     .scroll-cue {
@@ -888,10 +936,6 @@
         display: none;
       }
 
-      .gauges {
-        grid-template-columns: 1fr;
-      }
-
       .recgrid,
       .links {
         grid-template-columns: 1fr;
@@ -954,12 +998,13 @@
   <nav id="rail" aria-label="Page sections">
     <span class="cap">SECTORS</span>
     <div id="rail-track">
-      <div id="rail-fill"></div>
+      <div class="rail-seg" data-i="0" style="top:0%;height:33%"></div>
+      <div class="rail-seg" data-i="1" style="top:33%;height:33%"></div>
+      <div class="rail-seg" data-i="2" style="top:66%;height:34%"></div>
       <a class="rail-tick" data-sec="hero" href="#hero" style="top:0%"><span class="lbl">GRID</span></a>
-      <a class="rail-tick" data-sec="stints" href="#stints" style="top:26%"><span class="lbl">S1 · CAREER</span></a>
-      <a class="rail-tick" data-sec="channels" href="#channels" style="top:62%"><span class="lbl">S2 · STACK</span></a>
-      <a class="rail-tick" data-sec="record" href="#record" style="top:82%"><span class="lbl">S3 · RECORD</span></a>
-      <a class="rail-tick" data-sec="comms" href="#comms" style="top:100%"><span class="lbl">PIT</span></a>
+      <a class="rail-tick" data-sec="stints" href="#stints" style="top:33%"><span class="lbl">S1 · CAREER</span></a>
+      <a class="rail-tick" data-sec="channels" href="#channels" style="top:66%"><span class="lbl">S2 · STACK</span></a>
+      <a class="rail-tick" data-sec="comms" href="#comms" style="top:100%"><span class="lbl">S3 · CONTACT</span></a>
     </div>
     <span class="cap">GT3·DEV</span>
   </nav>
@@ -990,10 +1035,10 @@
             </filter>
           </defs>
           <path id="trk-base"
-            d="M210 400 C150 410 120 350 160 300 C200 250 280 280 300 230 C320 180 270 140 330 110 C400 75 470 120 540 95 C640 60 720 95 760 150 C800 205 730 250 780 300 C840 360 900 330 870 420 C845 495 740 470 660 470 C560 470 470 500 380 470 C300 445 270 430 210 400 Z" />
+            d="M 266.7 233.6 C 268.6 212.0 374.2 192.9 374.9 180.5 C 375.7 164.7 376.5 143.3 381.5 143.2 C 391.6 143.0 395.2 145.0 408.2 140.5 C 467.6 120.1 587.2 67.7 613.9 68.3 C 636.9 68.8 727.3 226.9 730.8 241.9 C 734.5 258.0 735.0 268.7 722.9 282.7 C 710.7 296.6 687.2 298.6 687.2 298.6 L 619.5 300.4 C 619.5 300.4 543.6 333.5 515.9 346.0 C 510.8 348.3 503.9 355.5 503.4 355.4 C 502.6 355.3 498.3 362.6 497.8 374.4 C 496.4 408.7 500.6 477.7 507.9 485.6 C 517.6 496.2 524.3 506.6 542.2 504.5 C 560.1 502.5 577.5 502.7 596.7 486.6 C 609.1 476.1 617.9 463.3 628.2 454.8 C 641.2 444.0 653.8 451.2 656.3 452.4 C 657.4 453.0 677.2 467.1 647.6 486.2 C 618.0 505.4 545.1 532.3 545.1 532.3 L 449.3 531.8 C 449.3 531.8 393.9 517.3 343.7 501.4 C 317.6 493.2 293.2 485.8 278.1 477.2 C 273.6 474.6 268.5 473.0 267.5 469.7 C 266.3 465.9 267.7 463.2 271.8 456.3 C 284.4 434.9 318.2 393.8 336.4 368.3 C 342.4 359.7 347.5 353.1 345.5 350.1 C 342.3 345.1 335.8 337.5 332.3 332.7 C 301.5 289.4 265.0 253.2 266.7 233.6 Z" />
           <path id="trk-prog"
-            d="M210 400 C150 410 120 350 160 300 C200 250 280 280 300 230 C320 180 270 140 330 110 C400 75 470 120 540 95 C640 60 720 95 760 150 C800 205 730 250 780 300 C840 360 900 330 870 420 C845 495 740 470 660 470 C560 470 470 500 380 470 C300 445 270 430 210 400 Z" />
-          <line id="trk-sf" x1="196" y1="386" x2="224" y2="414" />
+            d="M 266.7 233.6 C 268.6 212.0 374.2 192.9 374.9 180.5 C 375.7 164.7 376.5 143.3 381.5 143.2 C 391.6 143.0 395.2 145.0 408.2 140.5 C 467.6 120.1 587.2 67.7 613.9 68.3 C 636.9 68.8 727.3 226.9 730.8 241.9 C 734.5 258.0 735.0 268.7 722.9 282.7 C 710.7 296.6 687.2 298.6 687.2 298.6 L 619.5 300.4 C 619.5 300.4 543.6 333.5 515.9 346.0 C 510.8 348.3 503.9 355.5 503.4 355.4 C 502.6 355.3 498.3 362.6 497.8 374.4 C 496.4 408.7 500.6 477.7 507.9 485.6 C 517.6 496.2 524.3 506.6 542.2 504.5 C 560.1 502.5 577.5 502.7 596.7 486.6 C 609.1 476.1 617.9 463.3 628.2 454.8 C 641.2 444.0 653.8 451.2 656.3 452.4 C 657.4 453.0 677.2 467.1 647.6 486.2 C 618.0 505.4 545.1 532.3 545.1 532.3 L 449.3 531.8 C 449.3 531.8 393.9 517.3 343.7 501.4 C 317.6 493.2 293.2 485.8 278.1 477.2 C 273.6 474.6 268.5 473.0 267.5 469.7 C 266.3 465.9 267.7 463.2 271.8 456.3 C 284.4 434.9 318.2 393.8 336.4 368.3 C 342.4 359.7 347.5 353.1 345.5 350.1 C 342.3 345.1 335.8 337.5 332.3 332.7 C 301.5 289.4 265.0 253.2 266.7 233.6 Z" />
+          <line id="trk-sf" x1="255" y1="221" x2="280" y2="242" />
           <g id="car" filter="url(#carGlow)">
             <circle class="halo" r="13" />
             <circle class="core" r="5" />
@@ -1052,8 +1097,8 @@
 
         <p class="hero-sub">
           <strong>Staff-level software engineer</strong> building distributed systems — vectorized
-          data processing, real-time pipelines, and applied AI. I make slow things fast and
-          fragile things hold.
+          data processing, real-time pipelines, and applied AI.
+          <span class="motto">I chase performance — milliseconds in production, apexes on track.</span>
         </p>
 
         <div class="scroll-cue">
@@ -1188,7 +1233,7 @@
 
       <!-- RECORD -->
       <section id="record" class="blk">
-        <div class="sec-label"><span class="idx">S3</span> RECORD&nbsp;/&nbsp;OFF-TRACK</div>
+        <div class="sec-label"><span class="idx">//</span> RECORD&nbsp;/&nbsp;OFF-TRACK</div>
         <div class="recgrid">
           <div class="cell">
             <h4>Education</h4>
@@ -1317,24 +1362,44 @@
       }, { threshold: 0.35 });
       $$(".stint").forEach(el => io.observe(el));
 
-      // ---- lap rail: active sector + fill ----
+      // ---- lap rail: active sector + F1-style sector timing ----
       const ticks = $$(".rail-tick");
-      const fill = $("#rail-fill");
+      const segs = $$(".rail-seg");
       const secMap = ticks.map(t => ({ tick: t, el: document.getElementById(t.dataset.sec) }));
-      let scrollTick = false;
+      let scrollTick = false, lastActive = 0, started = false, sectorEnter = performance.now();
+      const bestSec = {};
+      let sessionBest = Infinity;
+      // grade a completed sector: purple = fastest of the session, green = personal best, yellow = slower
+      function gradeSector(i, dt) {
+        const seg = segs[i];
+        if (!seg) return;
+        let cls;
+        if (dt < sessionBest) { cls = "purple"; sessionBest = dt; bestSec[i] = dt; }
+        else if (dt < (bestSec[i] ?? Infinity)) { cls = "green"; bestSec[i] = dt; }
+        else cls = "yellow";
+        seg.classList.remove("purple", "green", "yellow", "flash");
+        void seg.offsetWidth; // restart the flash
+        seg.classList.add(cls, "flash");
+      }
       function onScroll() {
         const doc = document.documentElement;
-        const max = doc.scrollHeight - doc.clientHeight;
-        const pct = max > 0 ? (doc.scrollTop / max) * 100 : 0;
-        fill.style.height = pct + "%";
-        // active sector = last section whose top has passed the mid-line
         const mid = doc.scrollTop + window.innerHeight * 0.4;
         let active = 0;
         secMap.forEach((s, i) => { if (s.el && s.el.offsetTop <= mid) active = i; });
+        // the contact/footer sits at the very bottom and is too short to cross the trigger
+        // line — once scrolled to the end, force it active so its sector gets timed
+        if (doc.scrollTop + window.innerHeight >= doc.scrollHeight - 4) active = secMap.length - 1;
+        if (active !== lastActive) {
+          const now = performance.now();
+          if (active > lastActive) for (let i = lastActive; i < active; i++) gradeSector(i, now - sectorEnter);
+          lastActive = active;
+          sectorEnter = now; // start timing the sector just entered
+        }
         ticks.forEach((t, i) => t.classList.toggle("on", i === active));
         scrollTick = false;
       }
       addEventListener("scroll", () => {
+        if (!started) { started = true; sectorEnter = performance.now(); } // start the clock on first scroll
         if (!scrollTick) { requestAnimationFrame(onScroll); scrollTick = true; }
       }, { passive: true });
       onScroll();
