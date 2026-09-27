@@ -1130,7 +1130,7 @@
               <span class="s-org">Slickdeals</span>
               <span class="s-loc">San Mateo, CA</span>
             </div>
-            <div class="s-role"><span>Senior Software Engineer II</span><span class="when">2026.03 — PRESENT</span>
+            <div class="s-role"><span>Senior Software Engineer II, Team Lead</span><span class="when">2026.03 — PRESENT</span>
             </div>
             <div class="s-role sub"><span>Senior Software Engineer</span><span class="when">2024.08 — 2026.03</span>
             </div>
@@ -1139,16 +1139,25 @@
               <span class="peak">PEAK&nbsp;ETL&nbsp;−97%</span>
             </div>
             <ul class="log">
+              <li>Lead a cross-functional team of 5; mentored 2 engineers through design reviews that cut an Ops task
+                <span class="hot">−83% (30m → 5m)</span>.</li>
+              <li>Architected a company-wide <b>MCP server</b> for natural-language querying of deal &amp; product data
+                — <span class="hot">45%</span> prompt-to-pageview in week one; sped up content QA and merchant deal
+                validation through Prime Day, contributing to crossing the <b>$1M Amazon affiliate bonus tier</b> on
+                ~$40M referred revenue.</li>
+              <li>Built <b>Slickdeals Labs</b>, a self-serve Vue/Vite platform on a Terraform-provisioned K8s node pool
+                with ArgoCD and AWS PrivateLink — now the standard path for teams building on internal merchant data.</li>
+              <li>Architected a human-in-the-loop <b>ad scan pipeline</b> using Gemini to segment and extract deals from
+                scanned ad PDFs with full auditability — the standard pre-sale-season workflow at <span
+                  class="hot">~6m per scan</span>.</li>
               <li>Led migration from a PHP monolith to a distributed Python + Dagster platform — zero-downtime cutover
                 via EKS traffic-mirroring validating <b>40M+ daily records</b>.</li>
               <li>Cut pipeline runtime <span class="hot">−97% (5.5h → 16m)</span> and infra cost <span
                   class="hot">−40%</span> with Polars and EKS fan-out execution.</li>
-              <li>Architected a company-wide <b>MCP server</b> for natural-language querying of deal &amp; product data
-                — <span class="hot">45%</span> prompt-to-pageview in week one, greenlit for external release.</li>
+              <li>Built pipelines and embedding infrastructure for an <b>NLP comment-sentiment</b> system — Databricks
+                batch jobs plus vector retrieval surfacing content-level sentiment across user threads.</li>
               <li>Scaled ingestion to 26 merchants (Amazon, Walmart, Best Buy, eBay…) and modernized the dev platform
                 with a uv monorepo + ArgoCD, cutting deploys <span class="hot">−80% (10m → 2m)</span>.</li>
-              <li>Lead a cross-functional team of 5; mentored 2 junior engineers through design reviews and end-to-end
-                ownership.</li>
             </ul>
           </div>
         </article>
@@ -1196,8 +1205,9 @@
               <li>Built and extended <b>C++ audio processing</b> for a 24/7 live <b>911 dispatch</b> platform —
                 SIP/FreeSWITCH signaling, multicast packet handling, DSP modules, and containerized audio across
                 phones, field radios, and encrypted tactical channels.</li>
-              <li>Built a Node.js REST API for real-time dispatch connection management, cutting call-establishment
-                latency <span class="hot">−87% (2.3s → 0.3s)</span> via a shared hash-based routing scheme.</li>
+              <li>Owned the media API, a Node.js service for real-time dispatch connection management — shared hash-based
+                routing eliminated cascading pod redirects, cutting call-establishment latency <span
+                  class="hot">−87% (2.3s → 0.3s)</span>.</li>
               <li>Migrated dispatch messaging from Kafka to Redis Pub/Sub with idempotent multi-publish — speed without
                 sacrificing delivery reliability.</li>
             </ul>
@@ -1219,7 +1229,7 @@
         <div class="chan">
           <div class="c-id">CH·02<span class="nm">AI / DATA</span></div>
           <div class="chips">
-            <span class="chip">RAG / LLM</span><span class="chip">MCP</span><span class="chip">Dagster</span><span
+            <span class="chip">RAG / LLM</span><span class="chip">MCP</span><span class="chip">Vector&nbsp;Retrieval</span><span class="chip">Dagster</span><span
               class="chip">Polars</span><span class="chip">Kafka</span><span class="chip">Redis</span><span
               class="chip">Prometheus</span><span class="chip">Postgres</span><span class="chip">MySQL</span>
           </div>
