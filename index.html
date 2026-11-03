@@ -4,14 +4,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Matt Hallowell — Staff Software Engineer</title>
+  <title>Matt Hallowell — Senior Software Engineer II, Team Lead</title>
   <meta name="description"
-    content="Matt Hallowell — Staff Software Engineer. Distributed systems, real-time data, applied AI. Polars/Dagster pipelines, MCP servers, low-latency systems.">
+    content="Matt Hallowell — Senior Software Engineer II, Team Lead. I build the platforms other teams build on: data pipelines, AI infrastructure, and self-serve tooling.">
   <meta name="theme-color" content="#0a0b0d">
-  <meta property="og:title" content="Matt Hallowell — Staff Software Engineer">
+  <meta property="og:title" content="Matt Hallowell — Senior Software Engineer II, Team Lead">
   <meta property="og:description"
-    content="Distributed systems, real-time data, applied AI. 40M+ daily records, 97% ETL runtime reduction.">
+    content="Data pipelines, AI infrastructure, and self-serve tooling. 40M+ daily records, 97% ETL runtime reduction.">
   <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Matt Hallowell — Senior Software Engineer">
+  <meta name="twitter:description"
+    content="Data pipelines, AI infrastructure, and self-serve tooling. 40M+ daily records, 97% ETL runtime reduction.">
   <link rel="icon"
     href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%230a0b0d'/><path d='M7 22 L13 10 L16 16 L19 12 L25 22' stroke='%23ff3b34' stroke-width='2.4' fill='none' stroke-linejoin='round' stroke-linecap='round'/></svg>">
   <style>
@@ -1024,7 +1028,7 @@
   <!-- STATUS BAR -->
   <header id="statusbar">
     <span class="sb-id">MATT&nbsp;HALLOWELL</span>
-    <span class="sb-dim hide-sm">STAFF·SWE</span>
+    <span class="sb-dim hide-sm">SR·SWE&nbsp;II·LEAD</span>
     <span class="sb-spacer"></span>
     <span class="hide-sm">SYS&nbsp;<span style="color:var(--green)">ONLINE</span></span>
     <span class="sb-lap"><span class="dot"></span>LAP&nbsp;<span id="lapno">01</span></span>
@@ -1108,8 +1112,8 @@
             </svg></span>Matt<br><span class="ln2">Hallowell</span></h1>
 
         <p class="hero-sub">
-          <strong>Staff-level software engineer</strong> building distributed systems — vectorized
-          data processing, real-time pipelines, and applied AI.
+          <strong>Senior Software Engineer II, Team Lead.</strong> I build the platforms other teams build on:
+          data pipelines, AI infrastructure, and self-serve tooling.
           <span class="motto">I chase performance — milliseconds in production, apexes on track.</span>
         </p>
 
@@ -1139,25 +1143,28 @@
               <span class="peak">PEAK&nbsp;ETL&nbsp;−97%</span>
             </div>
             <ul class="log">
-              <li>Lead a cross-functional team of 5; mentored 2 engineers through design reviews that cut an Ops task
-                <span class="hot">−83% (30m → 5m)</span>.</li>
-              <li>Architected a company-wide <b>MCP server</b> for natural-language querying of deal &amp; product data
-                — <span class="hot">45%</span> prompt-to-pageview in week one; sped up content QA and merchant deal
-                validation through Prime Day, contributing to crossing the <b>$1M Amazon affiliate bonus tier</b> on
-                ~$40M referred revenue.</li>
-              <li>Built <b>Slickdeals Labs</b>, a self-serve Vue/Vite platform on a Terraform-provisioned K8s node pool
-                with ArgoCD and AWS PrivateLink — now the standard path for teams building on internal merchant data.</li>
-              <li>Architected a human-in-the-loop <b>ad scan pipeline</b> using Gemini to segment and extract deals from
-                scanned ad PDFs with full auditability — the standard pre-sale-season workflow at <span
-                  class="hot">~6m per scan</span>.</li>
-              <li>Led migration from a PHP monolith to a distributed Python + Dagster platform — zero-downtime cutover
-                via EKS traffic-mirroring validating <b>40M+ daily records</b>.</li>
-              <li>Cut pipeline runtime <span class="hot">−97% (5.5h → 16m)</span> and infra cost <span
-                  class="hot">−40%</span> with Polars and EKS fan-out execution.</li>
-              <li>Built pipelines and embedding infrastructure for an <b>NLP comment-sentiment</b> system — Databricks
-                batch jobs plus vector retrieval surfacing content-level sentiment across user threads.</li>
-              <li>Scaled ingestion to 26 merchants (Amazon, Walmart, Best Buy, eBay…) and modernized the dev platform
-                with a uv monorepo + ArgoCD, cutting deploys <span class="hot">−80% (10m → 2m)</span>.</li>
+              <li>Built the company's <b>Python/Dagster ETL platform</b> from scratch, processing <b>40M+ records
+                daily</b> across ~30 merchant catalogs; Polars and Kubernetes fan-out cut runtime <span
+                  class="hot">97% (5.5h → 16m)</span> and infrastructure cost <span class="hot">40%</span>.</li>
+              <li>Led the migration of product, offer and price data off a legacy monolith to a new <b>FastAPI
+                platform</b>, with shadow-traffic validation and a zero-downtime cutover.</li>
+              <li>Architected Slickdeals' <b>Model Context Protocol (MCP) server</b> for LLM-powered deal queries in
+                internal and customer-facing tools, with link attribution and OAuth 2.1 designed in; helped cross the
+                <b>$1M Amazon affiliate bonus tier</b> (~$40M referred revenue).</li>
+              <li>Created <b>Slickdeals Labs</b>, a self-serve TypeScript platform that consolidated scattered internal
+                tooling onto governed infrastructure; 13 tools now run on it across Ops, Data, Search, Sales, Finance
+                and IT, and it cut a core Ops task <span class="hot">83% (30 → 5 min)</span>.</li>
+              <li>Built the supply side of <b>The Sift</b>, Slickdeals' Black Friday 2026 product: a Gemini Vision
+                pipeline that turns retailer ad circulars into reviewable offers (<span class="hot">~6 min per
+                  scan</span>), admin tooling for ops, a Cloudflare image CDN, and a Go capture tool.</li>
+              <li>Owned a <b>250K-user A/B test</b> on the price-history graph end to end, redirecting roadmap spend
+                away from a costly accuracy project.</li>
+              <li>Shipped a full-stack <b>Amazon deal-hunting tool</b> the deals team used daily through Prime Day and
+                Black Friday 2025.</li>
+              <li>Rebuilt CI/CD with a uv monorepo and ArgoCD (deploys <span class="hot">10m → 2m, −80%</span>) and
+                migrated production to new EKS clusters.</li>
+              <li>Lead a team of 5 and mentor 2 engineers; my architecture and design docs set direction for the core
+                platform, data science and operations teams.</li>
             </ul>
           </div>
         </article>
@@ -1222,33 +1229,54 @@
         <div class="chan">
           <div class="c-id">CH·01<span class="nm">LANGUAGES</span></div>
           <div class="chips">
-            <span class="chip">Python</span><span class="chip">Go</span><span class="chip">JavaScript</span><span
-              class="chip">C++</span><span class="chip">Java</span>
+            <span class="chip">Python</span><span class="chip">Go</span><span class="chip">TypeScript</span><span
+              class="chip">JavaScript&nbsp;/&nbsp;Node.js</span><span class="chip">C++</span><span
+              class="chip">Java</span>
           </div>
         </div>
         <div class="chan">
-          <div class="c-id">CH·02<span class="nm">AI / DATA</span></div>
+          <div class="c-id">CH·02<span class="nm">AI / ML</span></div>
           <div class="chips">
-            <span class="chip">RAG / LLM</span><span class="chip">MCP</span><span class="chip">Vector&nbsp;Retrieval</span><span class="chip">Dagster</span><span
-              class="chip">Polars</span><span class="chip">Kafka</span><span class="chip">Redis</span><span
-              class="chip">Prometheus</span><span class="chip">Postgres</span><span class="chip">MySQL</span>
+            <span class="chip">RAG&nbsp;/&nbsp;LLM&nbsp;Engineering</span><span class="chip">Model&nbsp;Context&nbsp;Protocol&nbsp;(MCP)</span><span
+              class="chip">Gemini&nbsp;(Vision,&nbsp;Embeddings)</span><span
+              class="chip">LLM&nbsp;Browser&nbsp;Agents&nbsp;(Playwright,&nbsp;Crawl4AI)</span><span
+              class="chip">Vector&nbsp;Retrieval</span><span class="chip">A/B&nbsp;Testing</span>
           </div>
         </div>
         <div class="chan">
-          <div class="c-id">CH·03<span class="nm">DISTRIBUTED / CLOUD</span></div>
+          <div class="c-id">CH·03<span class="nm">BACKEND / DATA</span></div>
+          <div class="chips">
+            <span class="chip">FastAPI</span><span class="chip">SQLAlchemy</span><span class="chip">Alembic</span><span
+              class="chip">Dagster</span><span class="chip">Polars</span><span class="chip">ETL&nbsp;Pipelines</span><span
+              class="chip">SQL</span><span class="chip">Kafka</span><span class="chip">RabbitMQ</span><span
+              class="chip">Redis</span><span class="chip">PostgreSQL</span><span class="chip">MySQL</span><span
+              class="chip">Prometheus</span>
+          </div>
+        </div>
+        <div class="chan">
+          <div class="c-id">CH·04<span class="nm">CLOUD / INFRA</span></div>
           <div class="chips">
             <span class="chip">AWS&nbsp;EKS</span><span class="chip">S3</span><span class="chip">RDS</span><span
               class="chip">ElastiCache</span><span class="chip">MSK</span><span class="chip">IAM</span><span
-              class="chip">Route&nbsp;53</span><span class="chip">Kubernetes</span><span
-              class="chip">Terraform</span>
+              class="chip">Route&nbsp;53</span><span class="chip">PrivateLink</span><span
+              class="chip">Kubernetes</span><span class="chip">Karpenter</span><span class="chip">Terraform</span>
           </div>
         </div>
         <div class="chan">
-          <div class="c-id">CH·04<span class="nm">PLATFORM / TOOLING</span></div>
+          <div class="c-id">CH·05<span class="nm">IDENTITY / EDGE</span></div>
           <div class="chips">
-            <span class="chip">GitHub&nbsp;Actions</span><span class="chip">GitLab&nbsp;CI</span><span
-              class="chip">Docker</span><span class="chip">Helm</span><span class="chip">ArgoCD</span><span
-              class="chip">env0</span>
+            <span class="chip">Cloudflare&nbsp;(WAF,&nbsp;CDN,&nbsp;Zero&nbsp;Trust)</span><span
+              class="chip">Keycloak</span><span class="chip">OAuth&nbsp;2.1</span><span
+              class="chip">Envoy&nbsp;Gateway</span>
+          </div>
+        </div>
+        <div class="chan">
+          <div class="c-id">CH·06<span class="nm">PLATFORM / TOOLING</span></div>
+          <div class="chips">
+            <span class="chip">CI/CD</span><span class="chip">GitHub&nbsp;Actions</span><span
+              class="chip">GitLab&nbsp;CI</span><span class="chip">Docker</span><span class="chip">Helm</span><span
+              class="chip">ArgoCD</span><span class="chip">uv</span><span class="chip">env0</span><span
+              class="chip">Nuxt</span>
           </div>
         </div>
       </section>
@@ -1383,7 +1411,7 @@
           if (bar) setTimeout(() => bar.style.width = bar.dataset.w + "%", 120);
           io.unobserve(el);
         });
-      }, { threshold: 0.35 });
+      }, { threshold: 0.15 }); // low enough that the tall Slickdeals stint still reveals on short phones
       $$(".stint").forEach(el => io.observe(el));
 
       // ---- lap rail: active sector + F1-style sector timing ----
